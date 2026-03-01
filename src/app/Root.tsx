@@ -24,56 +24,68 @@ export function Root() {
   };
 
   return (
-    <div className="relative min-h-screen mx-auto" style={{ backgroundColor: "var(--color-bg-primary)", maxWidth: "600px", width: "100%" }}>
-      <Outlet />
+    <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "#0a0a0a" }}>
+      {/* iPhone 13 Resolution Container */}
+      <div 
+        className="relative overflow-hidden" 
+        style={{ 
+          width: "390px", 
+          height: "844px",
+          backgroundColor: "var(--color-bg-primary)",
+        }}
+      >
+        <div className="h-full overflow-y-auto pb-[100px]">
+          <Outlet />
+        </div>
 
-      {/* Bottom Navigation Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto" style={{ maxWidth: "600px", width: "100%" }}>
-        <div
-          className="mx-4 mb-3 rounded-[20px] backdrop-blur-xl px-2 py-2"
-          style={{ 
-            backgroundColor: "var(--glass-bg)", 
-            border: "1px solid var(--glass-border)", 
-            boxShadow: "var(--shadow-xl)" 
-          }}
-        >
-          <div className="flex items-center justify-between gap-0.5">
-            {tabs.map((tab) => {
-              const active = isActive(tab.path);
-              return (
-                <button
-                  key={tab.path}
-                  onClick={() => navigate(tab.path)}
-                  className="relative flex-1 flex flex-col items-center gap-0.5 py-1.5 transition-all active:scale-95"
-                >
-                  {active && (
-                    <motion.div
-                      layoutId="active-tab"
-                      className="absolute inset-0 rounded-xl"
-                      style={{
-                        background: "var(--gradient-primary-soft)",
-                      }}
-                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                    />
-                  )}
-                  <div className="relative">
-                    <tab.icon
-                      className="w-5 h-5 transition-colors"
-                      style={{
-                        color: active ? "var(--color-primary)" : "var(--color-text-muted)",
-                        strokeWidth: active ? 2.5 : 2,
-                      }}
-                    />
-                  </div>
-                  <span
-                    className="relative text-[10px] font-semibold transition-colors"
-                    style={{ color: active ? "var(--color-primary)" : "var(--color-text-muted)" }}
+        {/* Bottom Navigation Bar */}
+        <div className="absolute bottom-0 left-0 right-0 z-50">
+          <div
+            className="backdrop-blur-xl px-2 py-2"
+            style={{ 
+              backgroundColor: "var(--glass-bg)", 
+              borderTop: "1px solid var(--glass-border)", 
+              boxShadow: "var(--shadow-xl)",
+            }}
+          >
+            <div className="flex items-center justify-between gap-0.5">
+              {tabs.map((tab) => {
+                const active = isActive(tab.path);
+                return (
+                  <button
+                    key={tab.path}
+                    onClick={() => navigate(tab.path)}
+                    className="relative flex-1 flex flex-col items-center gap-0.5 py-1.5 transition-all active:scale-95"
                   >
-                    {tab.label}
-                  </span>
-                </button>
-              );
-            })}
+                    {active && (
+                      <motion.div
+                        layoutId="active-tab"
+                        className="absolute inset-0 rounded-xl"
+                        style={{
+                          background: "var(--gradient-primary-soft)",
+                        }}
+                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                      />
+                    )}
+                    <div className="relative">
+                      <tab.icon
+                        className="w-5 h-5 transition-colors"
+                        style={{
+                          color: active ? "var(--color-primary)" : "var(--color-text-muted)",
+                          strokeWidth: active ? 2.5 : 2,
+                        }}
+                      />
+                    </div>
+                    <span
+                      className="relative text-[10px] font-semibold transition-colors"
+                      style={{ color: active ? "var(--color-primary)" : "var(--color-text-muted)" }}
+                    >
+                      {tab.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { ChevronRight, User, Bell, Palette, Info, LogOut, Sparkles, Clock, Check } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 type Theme = "light" | "dark-purple" | "ocean";
 
 export function Settings() {
+  const { logout } = useAuth();
   const [notifications, setNotifications] = useState(() => {
     return localStorage.getItem("notifications") !== "false";
   });
@@ -22,6 +24,8 @@ export function Settings() {
   const [use24HourTime, setUse24HourTime] = useState(() => {
     return localStorage.getItem("use24HourTime") === "true";
   });
+
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   // Apply theme on mount and when theme changes
   useEffect(() => {
@@ -43,6 +47,11 @@ export function Settings() {
   useEffect(() => {
     localStorage.setItem("use24HourTime", use24HourTime.toString());
   }, [use24HourTime]);
+
+  const handleLogout = () => {
+    logout();
+    setShowLogoutConfirm(false);
+  };
 
   const profileData = {
     name: "Alex Johnson",
@@ -355,10 +364,96 @@ export function Settings() {
         transition={{ delay: 0.4 }}
         className="w-full rounded-[24px] p-5 active:scale-[0.98] transition-transform flex items-center justify-center gap-3"
         style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", border: "1px solid var(--color-border)" }}
+        onClick={() => setShowLogoutConfirm(true)}
       >
         <LogOut className="w-5 h-5 text-[#EF4444]" />
         <span className="font-bold text-[#EF4444]">Logout</span>
       </motion.button>
+
+      {/* Logout Confirmation Modal */}
+      {showLogoutConfirm && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center px-6"
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.6)", backdropFilter: "blur(8px)" }}
+          onClick={() => setShowLogoutConfirm(false)}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+            className="rounded-[28px] p-8 shadow-2xl w-full"
+            style={{
+              backgroundColor: "var(--color-bg-elevated)",
+              border: "1px solid var(--color-border)",
+              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.4)",
+              maxWidth: "420px",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Icon */}
+            <div className="flex justify-center mb-5">
+              <div
+                className="w-16 h-16 rounded-full flex items-center justify-center"
+                style={{
+                  background: "linear-gradient(135deg, #EF4444, #DC2626)",
+                  boxShadow: "0 8px 24px rgba(239, 68, 68, 0.4)",
+                }}
+              >
+                <LogOut className="w-8 h-8 text-white" />
+              </div>
+            </div>
+
+            {/* Title */}
+            <h2
+              className="text-2xl font-bold mb-3 text-center"
+              style={{ color: "var(--color-text-primary)" }}
+            >
+              Logout?
+            </h2>
+
+            {/* Description */}
+            <p
+              className="text-center mb-8"
+              style={{ color: "var(--color-text-secondary)", fontSize: "15px" }}
+            >
+              Are you sure you want to sign out of ClassMate?
+            </p>
+
+            {/* Buttons */}
+            <div className="flex gap-3">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => setShowLogoutConfirm(false)}
+                className="flex-1 py-4 rounded-2xl font-bold"
+                style={{
+                  backgroundColor: "var(--color-bg-secondary)",
+                  color: "var(--color-text-primary)",
+                  border: "1px solid var(--color-border)",
+                }}
+              >
+                Cancel
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleLogout}
+                className="flex-1 py-4 rounded-2xl font-bold text-white"
+                style={{
+                  background: "linear-gradient(135deg, #EF4444, #DC2626)",
+                  boxShadow: "0 4px 16px rgba(239, 68, 68, 0.3)",
+                }}
+              >
+                Logout
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 }

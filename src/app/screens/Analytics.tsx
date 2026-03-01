@@ -247,35 +247,6 @@ export function Analytics() {
                   filter: `drop-shadow(0 0 16px ${riskColor}90) drop-shadow(0 0 8px ${riskColor}60)`
                 }}
               />
-              
-              {/* Needle with enhanced shadow */}
-              <motion.line
-                x1="120"
-                y1="100"
-                x2="120"
-                y2="40"
-                stroke={riskColor}
-                strokeWidth="4"
-                strokeLinecap="round"
-                initial={{ transform: "rotate(-90deg)" }}
-                animate={{ transform: `rotate(${riskAngle - 90}deg)` }}
-                style={{ 
-                  transformOrigin: "120px 100px",
-                  filter: `drop-shadow(0 2px 8px ${riskColor}80)`
-                }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-              />
-              
-              {/* Center dot with glow */}
-              <circle 
-                cx="120" 
-                cy="100" 
-                r="8" 
-                fill={riskColor}
-                style={{
-                  filter: `drop-shadow(0 0 8px ${riskColor}90)`
-                }}
-              />
             </svg>
           </div>
 
@@ -773,7 +744,7 @@ export function Analytics() {
         </div>
       </motion.div>
 
-      {/* Study Streak */}
+      {/* Daily Check In */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -799,7 +770,7 @@ export function Analytics() {
               color: "#FFFFFF",
               marginBottom: "2px"
             }}>
-              Study Streak
+              Daily Check In
             </h2>
             <p style={{
               fontFamily: "'Inter', sans-serif",

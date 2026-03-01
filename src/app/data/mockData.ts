@@ -55,7 +55,6 @@ export interface WeeklyPerformance {
 export interface StreakData {
   current: number;
   longest: number;
-  lastUpdated: string;
 }
 
 // Achievement Milestone
@@ -340,7 +339,6 @@ export const weeklyPerformanceData: WeeklyPerformance[] = [
 export const studyStreak: StreakData = {
   current: 12,
   longest: 18,
-  lastUpdated: "2026-03-01",
 };
 
 export const achievements: Achievement[] = [

@@ -1,0 +1,4 @@
+// Supabase configuration
+export const projectId = "uguimrowimdlrzvocgwa";
+export const publicAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVndWltcm93aW1kbHJ6dm9jZ3dhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMTY2NjYsImV4cCI6MjA4Nzg5MjY2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ";
+export const supabaseUrl = `https://${projectId}.supabase.co`;

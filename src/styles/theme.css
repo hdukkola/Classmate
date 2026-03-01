@@ -1,34 +1,35 @@
 @theme {
-  /* Light Mode - Premium Color Palette */
-  --color-bg-primary: #f7f5fa;
-  --color-bg-secondary: #ece8f3;
-  --color-bg-elevated: #ffffff;
+  /* Default Theme - Dark Purple */
+  --color-bg-primary: #0d0c0e;
+  --color-bg-secondary: #1a1820;
+  --color-bg-elevated: #25212a;
   
-  --color-text-primary: #201d1d;
-  --color-text-secondary: #4a4458;
-  --color-text-muted: #7a7487;
+  --color-text-primary: #f5f3f7;
+  --color-text-secondary: #cfcbd6;
+  --color-text-muted: #9e98a8;
   --color-text-onAccent: #ffffff;
   --color-text-onWarm: #2b2727;
   
   --color-primary: #6b3894;
   --color-primary-hover: #7a44a8;
   --color-primary-active: #5c2f80;
-  --color-primary-soft: #6b38941a;
+  --color-primary-soft: #6b389426;
   
   --color-accent: #945cc1;
-  --color-accent-soft: #945cc118;
+  --color-accent-soft: #945cc124;
   
   --color-highlight: #d8b46a;
   --color-highlight-light: #dcbb78;
-  --color-highlight-soft: #d8b46a26;
+  --color-highlight-soft: #d8b46a2e;
   
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, #6b3894 0%, #945cc1 100%);
-  --gradient-primary-soft: linear-gradient(135deg, rgba(107, 56, 148, 0.1) 0%, rgba(148, 92, 193, 0.1) 100%);
+  --gradient-primary-soft: linear-gradient(135deg, rgba(107, 56, 148, 0.15) 0%, rgba(148, 92, 193, 0.15) 100%);
+  --gradient-accent: linear-gradient(135deg, #6b3894 0%, #945cc1 100%);
   --gradient-success: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
   --gradient-warning: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
   --gradient-danger: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
-  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%);
+  --gradient-card: linear-gradient(135deg, rgba(37, 33, 42, 0.9) 0%, rgba(26, 24, 32, 0.6) 100%);
   
   /* Status Colors */
   --color-success: #22C55E;
@@ -37,19 +38,28 @@
   --color-info: #3B82F6;
   
   /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  --glass-bg: rgba(37, 33, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   
   /* Shadows */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-  --shadow-premium: 0 25px 50px -12px rgba(107, 56, 148, 0.25);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.5);
+  --shadow-premium: 0 25px 50px -12px rgba(107, 56, 148, 0.5);
   
   /* Border */
-  --color-border: rgba(0, 0, 0, 0.08);
+  --color-border: rgba(255, 255, 255, 0.1);
+  
+  /* Auth Screens */
+  --card-bg: rgba(37, 33, 42, 0.9);
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --text-primary: #f5f3f7;
+  --text-secondary: #cfcbd6;
+  --text-tertiary: #9e98a8;
+  --accent-primary: #6b3894;
+  --border-color: rgba(255, 255, 255, 0.1);
   
   /* Spacing */
   --spacing-xs: 8px;
@@ -237,7 +247,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
+  /* Font family is now controlled by fonts.css */
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   -webkit-font-smoothing: antialiased;
@@ -277,4 +287,14 @@ body {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

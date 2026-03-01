@@ -1,6 +1,7 @@
 import { Hono } from "npm:hono";
 import { cors } from "npm:hono/cors";
 import { logger } from "npm:hono/logger";
+import { createClient } from "npm:@supabase/supabase-js@2";
 import * as kv from "./kv_store.tsx";
 
 const app = new Hono();
@@ -383,7 +384,7 @@ Remember: You're Flora, their supportive AI study buddy. Be warm, helpful, and m
     }
     // Default helpful response
     else {
-      fallbackResponse = "Hey! I'm Flora 🌸\n\nI'm currently running on local mode (OpenRouter is temporarily unavailable), but I can still help!\n\nI can give you advice on:\n• 📚 Study habits & strategies\n• 📊 Grade analysis (enable in Settings!)\n• 🎯 Goal setting & motivation\n• ⏰ Time management\n• 📝 Test preparation\n• ✍️ Subject-specific tips\n\nWhat would you like to know about?";
+      fallbackResponse = "Hey! I'm Flora 🌸\n\nI'm currently running on local mode (OpenRouter is temporarily unavailable), but I can still help!\n\nI can give you advice on:\n• 📚 Study habits & strategies\n• 📊 Grade analysis (enable in Settings!)\n• 🎯 Goal setting & motivation\n• ⏰ Time management\n• 📝 Test preparation\n• ���️ Subject-specific tips\n\nWhat would you like to know about?";
     }
     
     console.log(`✅ Generated fallback response (${fallbackResponse.length} chars)`);
@@ -509,13 +510,58 @@ app.delete("/make-server-9a43014a/ai/history", async (c) => {
   }
 });
 
+// ========================================
+// AUTHENTICATION ROUTES
+// ========================================
+
+// Sign up route
+app.post("/make-server-9a43014a/auth/signup", async (c) => {
+  try {
+    const { email, password, name } = await c.req.json();
+    
+    console.log("🔐 Creating new user:", email);
+    
+    const supabase = createClient(
+      Deno.env.get("SUPABASE_URL") ?? "",
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
+    );
+    
+    const { data, error } = await supabase.auth.admin.createUser({
+      email,
+      password,
+      user_metadata: { name },
+      // Automatically confirm the user's email since an email server hasn't been configured.
+      email_confirm: true,
+    });
+    
+    if (error) {
+      console.error("❌ Signup error:", error);
+      return c.json({ error: error.message }, 400);
+    }
+    
+    console.log("✅ User created successfully:", data.user?.id);
+    
+    return c.json({ 
+      success: true, 
+      user: {
+        id: data.user?.id,
+        email: data.user?.email,
+        name: name
+      }
+    });
+  } catch (error: any) {
+    console.error("❌ Signup exception:", error);
+    return c.json({ error: error.message }, 500);
+  }
+});
+
 console.log("🚀 Server starting...");
 console.log("🔑 Checking for OpenRouter API key...");
 const apiKey = Deno.env.get("OPENROUTER_API_KEY");
 if (apiKey) {
   console.log(`✅ OpenRouter API key found: ${apiKey.substring(0, 15)}...`);
 } else {
-  console.log("⚠️ WARNING: OpenRouter API key not found!");
+  console.log("���️ WARNING: OpenRouter API key not found!");
 }
 
 Deno.serve(app.fetch);
