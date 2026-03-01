@@ -1,3 +1,0 @@
-// Replaces figma:asset imports with a native-compatible image source.
-export const classmateLogoDataUri =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256 256'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%238b5cf6'/><stop offset='100%' stop-color='%233b82f6'/></linearGradient></defs><rect width='256' height='256' rx='56' fill='%230f1115'/><circle cx='128' cy='128' r='82' fill='url(%23g)'/><text x='128' y='144' text-anchor='middle' fill='white' font-size='76' font-family='Arial' font-weight='700'>C</text></svg>";
