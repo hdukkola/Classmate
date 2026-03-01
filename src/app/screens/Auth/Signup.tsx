@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Mail, Lock, User, Eye, EyeOff, Sparkles, Shield } from "lucide-react";
+import { User, Lock, Eye, EyeOff, Sparkles, Shield } from "lucide-react";
 import logo from "figma:asset/e8d95d2d8b336ca3bd69c9a1a1cf7b84851bce61.png";
+import { loginToHAC } from "../../services/hacApi";
 
 interface SignupProps {
   onSignupSuccess: () => void;
@@ -9,8 +10,7 @@ interface SignupProps {
 }
 
 export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +18,9 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  
+  // Hardcoded to Coppell ISD - users don't need to enter district URL
+  const districtUrl = "https://hac.coppellisd.com";
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,44 +34,29 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
       return;
     }
 
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters");
-      setLoading(false);
-      return;
-    }
-
     try {
-      // Dynamically import the info to avoid build issues
-      const { projectId, publicAnonKey } = await import(
-        "../../../config/supabase"
-      );
-
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-9a43014a/auth/signup`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${publicAnonKey}`,
-          },
-          body: JSON.stringify({ email, password, name }),
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || "Failed to create account");
+      // HAC login = signup (we don't create accounts, we connect to HAC)
+      const result = await loginToHAC({ districtUrl, username, password });
+      
+      if (result.success) {
+        // Store session in localStorage
+        localStorage.setItem("classmate_access_token", result.sessionToken || "");
+        localStorage.setItem("classmate_user", JSON.stringify({
+          id: result.studentId,
+          name: result.studentName,
+        }));
+        
+        setSuccess(true);
+        setTimeout(() => {
+          onSignupSuccess();
+        }, 1500);
+      } else {
+        setError(result.error || "Failed to connect to HAC");
         setLoading(false);
-        return;
       }
-
-      setSuccess(true);
-      setTimeout(() => {
-        onSignupSuccess();
-      }, 2000);
     } catch (err: any) {
-      setError(err.message || "An error occurred during signup");
+      console.error("HAC Connection error:", err);
+      setError(err.message || "An error occurred during connection");
       setLoading(false);
     }
   };
@@ -184,8 +172,8 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
             fontWeight: 800,
             color: "#ffffff",
             marginBottom: "8px",
-            textShadow: "0 4px 20px rgba(107, 56, 148, 0.4)",
             letterSpacing: "0.015em",
+            textShadow: "0 4px 20px rgba(107, 56, 148, 0.4)",
           }}
         >
           ClassMate
@@ -197,7 +185,7 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
           style={{
             fontFamily: "'Inter', sans-serif",
             fontSize: "16px",
-            color: "rgba(255, 255, 255, 0.9)",
+            color: "rgba(255, 255, 255, 0.5)",
             fontWeight: 500,
           }}
         >
@@ -213,13 +201,13 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
         style={{
           width: "100%",
           maxWidth: "440px",
-          background: "rgba(255, 255, 255, 0.12)",
-          backdropFilter: "blur(40px)",
-          WebkitBackdropFilter: "blur(40px)",
+          background: "rgba(20, 20, 20, 0.6)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
           borderRadius: "28px",
           padding: "40px",
-          boxShadow: "0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.15)",
+          boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05)",
+          border: "1px solid rgba(255, 255, 255, 0.08)",
           position: "relative",
           zIndex: 1,
         }}
@@ -228,7 +216,10 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            style={{ textAlign: "center" }}
+            style={{
+              textAlign: "center",
+              padding: "20px 0",
+            }}
           >
             <motion.div
               initial={{ scale: 0 }}
@@ -237,53 +228,44 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
                 type: "spring",
                 stiffness: 200,
                 damping: 15,
+                delay: 0.2,
               }}
               style={{
                 width: "80px",
                 height: "80px",
                 borderRadius: "50%",
-                background: "linear-gradient(135deg, #10B981, #059669)",
+                background: "linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.3))",
+                border: "3px solid rgba(16, 185, 129, 0.5)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 margin: "0 auto 24px",
-                boxShadow: "0 10px 40px rgba(16, 185, 129, 0.4)",
+                boxShadow: "0 0 40px rgba(16, 185, 129, 0.4)",
               }}
             >
-              <motion.svg
-                initial={{ pathLength: 0 }}
-                animate={{ pathLength: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                width="40"
-                height="40"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </motion.svg>
+              <Shield size={40} style={{ color: "#10B981" }} />
             </motion.div>
-            <h2
+            <h3
               style={{
                 fontFamily: "'SF Pro Display', -apple-system, sans-serif",
-                fontSize: "28px",
+                fontSize: "24px",
                 fontWeight: 700,
                 color: "#ffffff",
                 marginBottom: "12px",
               }}
             >
               Welcome Aboard! 🎉
-            </h2>
+            </h3>
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "15px",
-                color: "rgba(255, 255, 255, 0.8)",
+                color: "rgba(255, 255, 255, 0.7)",
+                lineHeight: "1.6",
               }}
             >
+              Your account has been verified.
+              <br />
               Redirecting you to login...
             </p>
           </motion.div>
@@ -313,12 +295,12 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
                   margin: 0,
                 }}
               >
-                Join thousands of students achieving academic excellence
+                Connect your HAC account to get started
               </p>
             </div>
 
             <form onSubmit={handleSignup}>
-              {/* Name Input */}
+              {/* Username Input */}
               <div style={{ marginBottom: "20px" }}>
                 <label
                   style={{
@@ -330,7 +312,7 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
                     display: "block",
                   }}
                 >
-                  Full Name
+                  HAC Username
                 </label>
                 <div
                   style={{
@@ -351,72 +333,9 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
                   <motion.input
                     whileFocus={{ scale: 1.01 }}
                     type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="John Doe"
-                    required
-                    style={{
-                      width: "100%",
-                      padding: "16px 16px 16px 48px",
-                      borderRadius: "16px",
-                      border: "1.5px solid rgba(255, 255, 255, 0.2)",
-                      background: "rgba(255, 255, 255, 0.1)",
-                      color: "#ffffff",
-                      fontFamily: "'Inter', sans-serif",
-                      fontSize: "15px",
-                      outline: "none",
-                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                    }}
-                    onFocus={(e) => {
-                      e.target.style.borderColor = "rgba(255, 255, 255, 0.5)";
-                      e.target.style.background = "rgba(255, 255, 255, 0.15)";
-                      e.target.style.boxShadow = "0 0 0 4px rgba(255, 255, 255, 0.1)";
-                    }}
-                    onBlur={(e) => {
-                      e.target.style.borderColor = "rgba(255, 255, 255, 0.2)";
-                      e.target.style.background = "rgba(255, 255, 255, 0.1)";
-                      e.target.style.boxShadow = "none";
-                    }}
-                  />
-                </div>
-              </div>
-
-              {/* Email Input */}
-              <div style={{ marginBottom: "20px" }}>
-                <label
-                  style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    color: "#ffffff",
-                    marginBottom: "8px",
-                    display: "block",
-                  }}
-                >
-                  Email Address
-                </label>
-                <div
-                  style={{
-                    position: "relative",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <Mail
-                    size={20}
-                    style={{
-                      position: "absolute",
-                      left: "16px",
-                      color: "rgba(255, 255, 255, 0.6)",
-                      zIndex: 1,
-                    }}
-                  />
-                  <motion.input
-                    whileFocus={{ scale: 1.01 }}
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="student@school.edu"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Your HAC username"
                     required
                     style={{
                       width: "100%",
@@ -551,7 +470,7 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
                     alignItems: "center",
                   }}
                 >
-                  <Shield
+                  <Lock
                     size={20}
                     style={{
                       position: "absolute",
@@ -686,7 +605,7 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
                     ⚡
                   </motion.div>
                 )}
-                {loading ? "Creating Your Account..." : "Create Account"}
+                {loading ? "Creating Account..." : "Create Account"}
               </motion.button>
 
               {/* Login Link */}
@@ -741,7 +660,7 @@ export function Signup({ onSignupSuccess, onSwitchToLogin }: SignupProps) {
           zIndex: 1,
         }}
       >
-        🔒 Your data is encrypted and secure. By signing up, you agree to our Terms & Privacy Policy.
+        🔒 Your HAC credentials are secure and never stored.
       </motion.p>
     </div>
   );

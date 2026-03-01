@@ -1,0 +1,316 @@
+Running frontend commit bf7e92fde14bce17ce7839702f7b03b902ddee1b
+vendor-core-4ad04edb85d11631.min.js.br:54 Statsig is not ready to log exposures, will retry in 1 seconds
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1104
+u @ vendor-core-4ad04edb85d11631.min.js.br:54
+setTimeout
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:63
+logExposureForFeatureGateCheck @ 1741-0091e26ad4c06e70.min.js.br:1104
+getFeatureGateFromInitialOptions @ 1741-0091e26ad4c06e70.min.js.br:1104
+getFeatureGate @ 1741-0091e26ad4c06e70.min.js.br:1104
+getFeatureGate @ 1741-0091e26ad4c06e70.min.js.br:1431
+932235 @ figma_app-7a3deb8c5f1e60c7.min.js.br:418
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+801936 @ figma_app-7a3deb8c5f1e60c7.min.js.br:39
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+781295 @ figma_app-7a3deb8c5f1e60c7.min.js.br:416
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+593464 @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+816199 @ 1741-0091e26ad4c06e70.min.js.br:85
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+881625 @ figma_app-7a3deb8c5f1e60c7.min.js.br:542
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+28285 @ 6066-00e6cfe0d142f55d.min.js.br:3
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+344653 @ figma_app-7a3deb8c5f1e60c7.min.js.br:418
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+912563 @ figma_app-7a3deb8c5f1e60c7.min.js.br:418
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+941181 @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+577246 @ 5340-6d13e661358730f9.min.js.br:3
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+483051 @ 8222-67306efb5f984200.min.js.br:3
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+948757 @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:711
+(anonymous) @ runtime~figma_app-94746346787bc880.min.js.br:3
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:711
+b @ runtime~figma_app-94746346787bc880.min.js.br:3
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:3Understand this warning
+vendor-core-4ad04edb85d11631.min.js.br:54 [import] git: 0e7d64904fd400e3b25164dad228ae255514d344, stamp: A19154625D587A0A
+vendor-core-4ad04edb85d11631.min.js.br:54 Autosave Changes not available or already claimed by another tab undefined
+1741-0091e26ad4c06e70.min.js.br:358 The powerPreference option is currently ignored when calling requestAdapter() on Windows. See https://crbug.com/369219127
+initialize @ 1741-0091e26ad4c06e70.min.js.br:358
+f @ 1741-0091e26ad4c06e70.min.js.br:358
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+await in (anonymous)
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:678
+gl @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+await in (anonymous)
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1727
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+dispatch @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1727
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+dispatch @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1727
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+dispatch @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:175
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+dispatch @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:230
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:175
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+d @ 1741-0091e26ad4c06e70.min.js.br:1106
+B @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+time @ 1741-0091e26ad4c06e70.min.js.br:398
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+await in (anonymous)
+tD @ 1741-0091e26ad4c06e70.min.js.br:175
+wG @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+n @ 1741-0091e26ad4c06e70.min.js.br:1073
+948757 @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+i @ runtime~figma_app-94746346787bc880.min.js.br:3
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:711
+(anonymous) @ runtime~figma_app-94746346787bc880.min.js.br:3
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:711
+b @ runtime~figma_app-94746346787bc880.min.js.br:3
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:3Understand this warning
+vendor-core-4ad04edb85d11631.min.js.br:54 Loaded 32 scripts (5961944b), 32 from cache (5961944b)
+vendor-core-4ad04edb85d11631.min.js.br:54 [Fullscreen] Booting... (emscripten version 4.0.21)
+vendor-core-4ad04edb85d11631.min.js.br:54 [GPU] graphicsAPI:"WebGPU", vendor:"Google Inc. (Intel)" renderer:"ANGLE (Intel, Intel(R) UHD Graphics 770 (0x0000A780) Direct3D11 vs_5_0 ps_5_0, D3D11)" deviceArchitecture:"gen-12lp" deviceDescription:"" webGPUDevice:"" webGPUVendor:"intel" bindings:"emdawnwebgpu"
+vendor-core-4ad04edb85d11631.min.js.br:54 [Fullscreen] Ready in 394.2ms
+vendor-core-4ad04edb85d11631.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+vendor-core-4ad04edb85d11631.min.js.br:54 [MultiplayerSession] connecting to wss://www.figma.com/api/multiplayer/bS521iAEBncoGXB5WRlzc3?role=editor&tracking_session_id=tYW8aPHnsf9Hpc3U&version=151&recentReload=0&file-load-streaming-compression&user-id=1130212209626965095&client_release=bf7e92fde14bce17ce7839702f7b03b902ddee1b
+vendor-core-4ad04edb85d11631.min.js.br:54 [FullscreenApp] calling setEditorTheme and setting preference light
+vendor-core-4ad04edb85d11631.min.js.br:54 [MultiplayerSession] Joining file version 106 (initial load)
+vendor-core-4ad04edb85d11631.min.js.br:54 Migration succeeded: context: fullscreen_migrate_SceneGraphManager, version: 106, duration: 0ms.
+/make/bS521iAEBncoGXB5WRlzc3/ClassMate-iOS-App-Design?p=f&t=uCloxjMlSKfpWDSp-0:1 Access to image at 'https://www.gravatar.com/avatar/cde0885386ea67f9a3ce7828519386fc?size=240&default=https%3A%2F%2Fs3-alpha.figma.com%2Fstatic%2Fuser_h_v2.png?c=1' from origin 'https://www.figma.com' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.Understand this error
+www.gravatar.com/avatar/cde0885386ea67f9a3ce7828519386fc?size=240&default=https%3A%2F%2Fs3-alpha.figma.com%2Fstatic%2Fuser_h_v2.png?c=1:1  GET https://www.gravatar.com/avatar/cde0885386ea67f9a3ce7828519386fc?size=240&default=https%3A%2F%2Fs3-alpha.figma.com%2Fstatic%2Fuser_h_v2.png?c=1 net::ERR_FAILED 302 (Found)
+Image
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:39
+B @ figma_app-7a3deb8c5f1e60c7.min.js.br:39
+g @ figma_app-7a3deb8c5f1e60c7.min.js.br:411
+y @ figma_app-7a3deb8c5f1e60c7.min.js.br:411
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:411
+aB @ vendor-core-4ad04edb85d11631.min.js.br:11
+oD @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:11
+oB @ vendor-core-4ad04edb85d11631.min.js.br:11
+oL @ vendor-core-4ad04edb85d11631.min.js.br:11
+f5 @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:11
+requestAnimationFrame
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:63
+gZ @ 1741-0091e26ad4c06e70.min.js.br:196
+a @ 1741-0091e26ad4c06e70.min.js.br:398
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1103
+dispatch @ 1741-0091e26ad4c06e70.min.js.br:1103
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:807
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:230
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:175
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+dispatch @ vendor-core-4ad04edb85d11631.min.js.br:46
+U @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1727
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 4435-7ce80a8f40a815a0.min.js.br:5
+aB @ vendor-core-4ad04edb85d11631.min.js.br:11
+oD @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54
+S @ vendor-core-4ad04edb85d11631.min.js.br:54
+O @ vendor-core-4ad04edb85d11631.min.js.br:54Understand this error
+vendor-core-4ad04edb85d11631.min.js.br:63  GET https://www.figma.com/api/make/bS521iAEBncoGXB5WRlzc3/cached_preview_urls?source_code_hash=3843a5d91e09e5194530900de7baa78fa4209b00 404 (Not Found)
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:63
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1143
+T @ 1741-0091e26ad4c06e70.min.js.br:1143
+await in T
+C @ 1741-0091e26ad4c06e70.min.js.br:1143
+P @ 1741-0091e26ad4c06e70.min.js.br:1143
+(anonymous) @ 5847-d3bb58aa4e2b352e.min.js.br:70
+validate @ figma_app-7a3deb8c5f1e60c7.min.js.br:418
+getCachedPreviewUrls @ 5847-d3bb58aa4e2b352e.min.js.br:70
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:542
+preloadCachedPreviewUrls @ figma_app-7a3deb8c5f1e60c7.min.js.br:542
+initializeCode @ figma_app-7a3deb8c5f1e60c7.min.js.br:542
+(anonymous) @ 6066-00e6cfe0d142f55d.min.js.br:3
+(anonymous) @ 4435-7ce80a8f40a815a0.min.js.br:290
+aB @ vendor-core-4ad04edb85d11631.min.js.br:11
+oD @ vendor-core-4ad04edb85d11631.min.js.br:11
+oL @ vendor-core-4ad04edb85d11631.min.js.br:11
+f5 @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:11
+oB @ vendor-core-4ad04edb85d11631.min.js.br:11
+oE @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:54
+S @ vendor-core-4ad04edb85d11631.min.js.br:54
+O @ vendor-core-4ad04edb85d11631.min.js.br:54Understand this error
+vendor-core-4ad04edb85d11631.min.js.br:54 [devtools] Initialized LS
+vendor-core-4ad04edb85d11631.min.js.br:54 [Fullscreen] loadtime=3.41s maxmem=59155896
+vendor-core-4ad04edb85d11631.min.js.br:63  POST https://www.figma.com/api/make/fetch_ds_code_gen_status 400 (Bad Request)
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:63
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1143
+T @ 1741-0091e26ad4c06e70.min.js.br:1143
+C @ 1741-0091e26ad4c06e70.min.js.br:1143
+r @ 1741-0091e26ad4c06e70.min.js.br:1143
+o @ figma_app-7a3deb8c5f1e60c7.min.js.br:411
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:416
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:416
+aB @ vendor-core-4ad04edb85d11631.min.js.br:11
+oD @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:11
+oB @ vendor-core-4ad04edb85d11631.min.js.br:11
+oL @ vendor-core-4ad04edb85d11631.min.js.br:11
+f5 @ vendor-core-4ad04edb85d11631.min.js.br:11
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:11
+requestAnimationFrame
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:63
+gZ @ 1741-0091e26ad4c06e70.min.js.br:196
+a @ 1741-0091e26ad4c06e70.min.js.br:398
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1103
+dispatch @ 1741-0091e26ad4c06e70.min.js.br:1103
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:807
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:230
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:175
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+dispatch @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ figma_app-7a3deb8c5f1e60c7.min.js.br:4
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1727
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:46
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+dispatch @ vendor-core-4ad04edb85d11631.min.js.br:46
+y5 @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:196
+e @ 1741-0091e26ad4c06e70.min.js.br:807
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:807
+u @ vendor-core-4ad04edb85d11631.min.js.br:54
+setTimeout
+(anonymous) @ vendor-core-4ad04edb85d11631.min.js.br:63
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:807
+notifyObserver @ 1741-0091e26ad4c06e70.min.js.br:1200
+postMutation @ 1741-0091e26ad4c06e70.min.js.br:1200
+applyMutations @ 1741-0091e26ad4c06e70.min.js.br:1200
+handleMessage @ figma_app-7a3deb8c5f1e60c7.min.js.br:557
+(anonymous) @ 1741-0091e26ad4c06e70.min.js.br:1203
+flushIfInitialized @ ClassMate-iOS-App-Design?p=f&t=gWVohNlSCOxlQt7B-0:539
+onMessage @ ClassMate-iOS-App-Design?p=f&t=gWVohNlSCOxlQt7B-0:539Understand this error
+vendor-core-4ad04edb85d11631.min.js.br:54 [devtools] Initialized LS
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔐 Attempting HAC login...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📍 API URL: https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/login
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 👤 Username: hxd8236
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🌐 District: https://hac.coppellisd.com
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Response status: 200
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Response headers: {content-type: 'application/json'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Raw response: {"success":true,"sessionToken":"hac_session_hxd8236_1772371887058","studentName":"hxd8236","studentId":"hxd8236"}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📦 Parsed data: {success: true, sessionToken: 'hac_session_hxd8236_1772371887058', studentName: 'hxd8236', studentId: 'hxd8236'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ✅ Login successful!
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 👤 Student: hxd8236
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🎫 Session token: hac_session_hxd8236_...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📊 Fetching grades from HAC...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔑 getAuthHeaders called:
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Token from localStorage: hac_session_hxd8236_1772371887...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Headers being sent: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Auth headers: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔑 getAuthHeaders called:
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Token from localStorage: hac_session_hxd8236_1772371887...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Headers being sent: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📝 Fetching upcoming assignments from HAC...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔑 getAuthHeaders called:
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Token from localStorage: hac_session_hxd8236_1772371887...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Headers being sent: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Auth headers: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔑 getAuthHeaders called:
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Token from localStorage: hac_session_hxd8236_1772371887...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Headers being sent: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📈 Fetching recent grades from HAC...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔑 getAuthHeaders called:
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Token from localStorage: hac_session_hxd8236_1772371887...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Headers being sent: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Auth headers: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔑 getAuthHeaders called:
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Token from localStorage: hac_session_hxd8236_1772371887...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Headers being sent: {Content-Type: 'application/json', Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3…Y2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ', X-HAC-Session-Token: 'hac_session_hxd8236_1772371887058'}Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVndWltcm93aW1kbHJ6dm9jZ3dhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzMTY2NjYsImV4cCI6MjA4Nzg5MjY2Nn0.6EK2tvhyzR2T7IlBsUrojJv1fM75ZhTBXqrISYwbSZQ"Content-Type: "application/json"X-HAC-Session-Token: "hac_session_hxd8236_1772371887058"[[Prototype]]: Object
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Response status: 200
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Response status: 200
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ✅ Recent grades received: {assignments: Array(0), upcoming: Array(0), recent: Array(0)}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ✅ Upcoming assignments received: {assignments: Array(0), upcoming: Array(0), recent: Array(0)}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28    Response status: 200
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ✅ Grades received: {success: true, classes: Array(16)}

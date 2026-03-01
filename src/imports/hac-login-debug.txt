@@ -1,0 +1,57 @@
+🔐 Attempting HAC login...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📍 API URL: https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/login
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 👤 Username: kxy3941
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🌐 District: https://hac.coppellisd.com
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Response status: 200
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Response headers: {content-type: 'application/json'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Raw response: {"success":true,"sessionToken":"hac_session_kxy3941_1772367486568","studentName":"to","studentId":"kxy3941"}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📦 Parsed data: {success: true, sessionToken: 'hac_session_kxy3941_1772367486568', studentName: 'to', studentId: 'kxy3941'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ✅ Login successful!
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 👤 Student: to
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🎫 Session token: hac_session_kxy3941_...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔍 Analyzing HAC login page...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🔍 HAC page analysis: {success: true, loginUrl: 'https://hac.coppellisd.com/HomeAccess/Account/LogOn', formAction: '/HomeAccess/Account/LogOn', inputs: Array(9), selects: Array(0), …}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🧪 Testing HAC API endpoint...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28  GET https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/debug-hac 404 (Not Found)
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+testHACAPI @ Settings.tsx:68
+y @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+ik @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+ij @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+iz @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+dP @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dM @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dG @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dk @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+SR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+iR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+d$ @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+lO @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lN @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lv @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28Understand this error
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ❌ Debug test failed: SyntaxError: Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+r @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:69
+error @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+testHACAPI @ Settings.tsx:81
+await in testHACAPI
+y @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+ik @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+ij @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+iz @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+dP @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dM @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dG @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dk @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+SR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+iR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+d$ @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+lO @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lN @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lv @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28Understand this error

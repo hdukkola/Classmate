@@ -551,10 +551,10 @@ Check console for stack trace!`;
 
             {!hasGradeAccess && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 }}
-                className="mt-6 p-4 rounded-2xl max-w-sm"
+                className="mt-6 p-4 rounded-2xl max-w-lg mx-auto"
                 style={{
                   backgroundColor: "var(--color-bg-elevated)",
                   border: "1px solid var(--color-primary)",
@@ -626,7 +626,7 @@ Check console for stack trace!`;
                         </span>
                       </motion.div>
                     )}
-                    <p
+                    <div
                       style={{
                         fontFamily: "'Inter', sans-serif",
                         fontSize: "15px",
@@ -639,7 +639,7 @@ Check console for stack trace!`;
                       }}
                     >
                       <ReactMarkdown>{message.content}</ReactMarkdown>
-                    </p>
+                    </div>
                     
                     {/* Add to Calendar Button - shown if message has a study plan */}
                     {message.role === "assistant" && message.studyPlan && message.studyPlan.length > 0 && (

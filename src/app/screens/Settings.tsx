@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { ChevronRight, User, Bell, Palette, Info, LogOut, Sparkles, Clock, Check } from "lucide-react";
+import { ChevronRight, User, Bell, Palette, Info, LogOut, Sparkles, Clock, Check, Bug } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import { HACLogin } from "../components/HACLogin";
+import { projectId, publicAnonKey } from "/utils/supabase/info";
 
 type Theme = "light" | "dark-purple" | "ocean";
 
@@ -26,6 +28,8 @@ export function Settings() {
   });
 
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [debugResult, setDebugResult] = useState<any>(null);
+  const [debugLoading, setDebugLoading] = useState(false);
 
   // Apply theme on mount and when theme changes
   useEffect(() => {
@@ -51,6 +55,132 @@ export function Settings() {
   const handleLogout = () => {
     logout();
     setShowLogoutConfirm(false);
+  };
+
+  const testHACAPI = async () => {
+    setDebugLoading(true);
+    setDebugResult(null);
+    
+    try {
+      console.log("🧪 Testing HAC scraper directly...");
+      
+      // Test login endpoint instead
+      const url = `https://${projectId}.supabase.co/functions/v1/make-server-9a43014a/hac/login`;
+      
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${publicAnonKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: "test_user",
+          password: "test_pass",
+          districtUrl: "hac.coppellisd.com"
+        })
+      });
+      
+      const responseText = await response.text();
+      console.log("📡 Raw response:", responseText);
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error("❌ Response is not JSON:", responseText.substring(0, 200));
+        setDebugResult({ 
+          error: "Server returned non-JSON response", 
+          response: responseText.substring(0, 500)
+        });
+        setDebugLoading(false);
+        return;
+      }
+      
+      console.log("🧪 Debug response:", data);
+      setDebugResult(data);
+      
+    } catch (error: any) {
+      console.error("❌ Debug test failed:", error);
+      setDebugResult({ error: error.message });
+    } finally {
+      setDebugLoading(false);
+    }
+  };
+
+  const analyzeHACLoginPage = async () => {
+    setDebugLoading(true);
+    setDebugResult(null);
+    
+    try {
+      console.log("🔍 Analyzing HAC login page...");
+      
+      const url = `https://${projectId}.supabase.co/functions/v1/make-server-9a43014a/debug-hac-login-page`;
+      
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${publicAnonKey}`
+        }
+      });
+      
+      const data = await response.json();
+      console.log("🔍 Analysis result:", data);
+      
+      setDebugResult(data);
+    } catch (error: any) {
+      console.error("❌ Analysis failed:", error);
+      setDebugResult({
+        error: error.message,
+        details: "Failed to analyze login page"
+      });
+    } finally {
+      setDebugLoading(false);
+    }
+  };
+
+  const testFullLoginFlow = async () => {
+    setDebugLoading(true);
+    setDebugResult(null);
+    
+    try {
+      console.log("🧪 Testing full HAC login flow...");
+      
+      const url = `https://${projectId}.supabase.co/functions/v1/make-server-9a43014a/debug-hac-full-flow`;
+      
+      // Get credentials from auth context or prompt user
+      const testCreds = {
+        username: prompt("Enter HAC username for testing:"),
+        password: prompt("Enter HAC password for testing:"),
+        districtUrl: prompt("Enter district URL (e.g., hac.coppellisd.com):")
+      };
+      
+      if (!testCreds.username || !testCreds.password || !testCreds.districtUrl) {
+        alert("Test cancelled - credentials required");
+        return;
+      }
+      
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${publicAnonKey}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(testCreds)
+      });
+      
+      const data = await response.json();
+      console.log("🧪 Full flow result:", data);
+      
+      setDebugResult(data);
+    } catch (error: any) {
+      console.error("❌ Full flow test failed:", error);
+      setDebugResult({
+        error: error.message,
+        details: "Failed to test full login flow"
+      });
+    } finally {
+      setDebugLoading(false);
+    }
   };
 
   const profileData = {
@@ -319,6 +449,147 @@ export function Settings() {
               </div>
             </label>
           </div>
+        </div>
+      </motion.div>
+
+      {/* HAC PowerSchool Integration Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.25 }}
+        className="mb-6"
+      >
+        <p className="text-sm font-bold mb-3 px-2 uppercase tracking-wide" style={{ color: "var(--color-text-muted)" }}>
+          Grade Integration
+        </p>
+        <HACLogin />
+      </motion.div>
+
+      {/* Developer Debug Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+        className="mb-6"
+      >
+        <p className="text-sm font-bold mb-3 px-2 uppercase tracking-wide" style={{ color: "var(--color-text-muted)" }}>
+          Developer Tools
+        </p>
+        <div className="rounded-[24px] overflow-hidden"
+          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", border: "1px solid var(--color-border)" }}
+        >
+          <button 
+            onClick={testHACAPI}
+            disabled={debugLoading}
+            className="w-full flex items-center justify-between p-5 active:opacity-70 transition-opacity disabled:opacity-50"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 flex items-center justify-center">
+                <Bug className="w-5 h-5 text-[#10B981]" />
+              </div>
+              <div className="text-left">
+                <p className="font-bold" style={{ color: "var(--color-text-primary)" }}>
+                  {debugLoading ? "Testing..." : "Test HAC API"}
+                </p>
+                <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  Check backend + credentials
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5" style={{ color: "var(--color-text-muted)" }} />
+          </button>
+          
+          <button 
+            onClick={analyzeHACLoginPage}
+            disabled={debugLoading}
+            className="w-full flex items-center justify-between p-5 active:opacity-70 transition-opacity disabled:opacity-50"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 flex items-center justify-center">
+                <Bug className="w-5 h-5 text-[#10B981]" />
+              </div>
+              <div className="text-left">
+                <p className="font-bold" style={{ color: "var(--color-text-primary)" }}>
+                  {debugLoading ? "Analyzing..." : "Analyze HAC Login Page"}
+                </p>
+                <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  Check login page structure
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5" style={{ color: "var(--color-text-muted)" }} />
+          </button>
+          
+          <button 
+            onClick={testFullLoginFlow}
+            disabled={debugLoading}
+            className="w-full flex items-center justify-between p-5 active:opacity-70 transition-opacity disabled:opacity-50"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 flex items-center justify-center">
+                <Bug className="w-5 h-5 text-[#10B981]" />
+              </div>
+              <div className="text-left">
+                <p className="font-bold" style={{ color: "var(--color-text-primary)" }}>
+                  {debugLoading ? "Testing..." : "Test Full Login Flow"}
+                </p>
+                <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  Test entire login process
+                </p>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5" style={{ color: "var(--color-text-muted)" }} />
+          </button>
+          
+          {debugResult && (
+            <div className="p-5 pt-0">
+              {/* Summary Card */}
+              {debugResult.summary && (
+                <div className="rounded-xl p-4 mb-3"
+                  style={{ 
+                    backgroundColor: debugResult.summary.nameEndpointWorking && debugResult.summary.classesEndpointWorking
+                      ? "rgba(16, 185, 129, 0.1)" 
+                      : "rgba(239, 68, 68, 0.1)",
+                    border: debugResult.summary.nameEndpointWorking && debugResult.summary.classesEndpointWorking
+                      ? "1px solid rgba(16, 185, 129, 0.3)"
+                      : "1px solid rgba(239, 68, 68, 0.3)"
+                  }}
+                >
+                  <p className="font-bold mb-2 text-sm" style={{ 
+                    color: debugResult.summary.nameEndpointWorking && debugResult.summary.classesEndpointWorking
+                      ? "#10B981" 
+                      : "#EF4444" 
+                  }}>
+                    {debugResult.summary.nameEndpointWorking && debugResult.summary.classesEndpointWorking
+                      ? "✅ All Systems Working!"
+                      : "⚠️ Issues Detected"}
+                  </p>
+                  <div className="space-y-1 text-xs" style={{ color: "var(--color-text-secondary)" }}>
+                    {debugResult.summary.possibleIssues?.map((issue: string, i: number) => (
+                      <p key={i}>• {issue}</p>
+                    ))}
+                  </div>
+                  {!debugResult.summary.nameEndpointWorking && !debugResult.summary.classesEndpointWorking && (
+                    <p className="mt-3 text-xs font-medium" style={{ color: "#EF4444" }}>
+                      💡 Try logging into hac.coppellisd.com manually to verify your credentials
+                    </p>
+                  )}
+                </div>
+              )}
+              
+              {/* Full JSON Response */}
+              <div className="rounded-xl p-4 font-mono text-xs overflow-auto max-h-64"
+                style={{ backgroundColor: "var(--color-bg-secondary)", border: "1px solid var(--color-border)" }}
+              >
+                <p className="font-bold mb-2" style={{ color: "var(--color-primary)" }}>
+                  Full API Response:
+                </p>
+                <pre style={{ color: "var(--color-text-secondary)" }}>
+                  {JSON.stringify(debugResult, null, 2)}
+                </pre>
+              </div>
+            </div>
+          )}
         </div>
       </motion.div>
 

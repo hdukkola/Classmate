@@ -1,0 +1,81 @@
+11:50:20 AM [vite] (client) hmr update /src/styles/index.css, /src/app/screens/Home.tsx, /src/app/components/HACLogin.tsx, /src/app/components/HACStatusBanner.tsx, /src/app/screens/Auth/Login.tsx, /src/app/screens/Auth/Signup.tsx
+ 🔐 Attempting HAC login...
+ 📍 API URL: https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/login
+ 👤 Username: hxd8236
+ 🌐 District: https://hac.coppellisd.com
+  POST https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/login 401 (Unauthorized)
+(anonymous) @ code_components_prev…cbf8c8.min.js.br:28
+loginToHAC @ hacApi.ts:192
+handleLogin @ Login.tsx:61
+y @ code_components_prev…cbf8c8.min.js.br:77
+i @ code_components_prev…cbf8c8.min.js.br:28
+ik @ code_components_prev…cbf8c8.min.js.br:77
+ij @ code_components_prev…cbf8c8.min.js.br:77
+iz @ code_components_prev…cbf8c8.min.js.br:77
+dP @ code_components_prev…cbf8c8.min.js.br:89
+dM @ code_components_prev…cbf8c8.min.js.br:89
+dG @ code_components_prev…cbf8c8.min.js.br:89
+dk @ code_components_prev…cbf8c8.min.js.br:89
+(anonymous) @ code_components_prev…cbf8c8.min.js.br:89
+SR @ code_components_prev…cbf8c8.min.js.br:89
+iR @ code_components_prev…cbf8c8.min.js.br:77
+d$ @ code_components_prev…cbf8c8.min.js.br:89
+lO @ code_components_prev…cbf8c8.min.js.br:77
+lN @ code_components_prev…cbf8c8.min.js.br:77
+lv @ code_components_prev…cbf8c8.min.js.br:77
+i @ code_components_prev…cbf8c8.min.js.br:28Understand this error
+ 📡 Response status: 401
+ 📡 Response headers: {content-type: 'application/json'}
+ 📡 Raw response: {"success":false,"error":"HAC API returned empty or invalid response. Please verify your credentials. Response was: \"\""}
+ 📦 Parsed data: {success: false, error: 'HAC API returned empty or invalid response. Please verify your credentials. Response was: ""'}
+ ❌ Login failed: HAC API returned empty or invalid response. Please verify your credentials. Response was: ""
+(anonymous) @ code_components_prev…cbf8c8.min.js.br:28
+r @ code_components_prev…cbf8c8.min.js.br:69
+error @ code_components_prev…cbf8c8.min.js.br:28
+loginToHAC @ hacApi.ts:219
+await in loginToHAC
+handleLogin @ Login.tsx:61
+y @ code_components_prev…cbf8c8.min.js.br:77
+i @ code_components_prev…cbf8c8.min.js.br:28
+ik @ code_components_prev…cbf8c8.min.js.br:77
+ij @ code_components_prev…cbf8c8.min.js.br:77
+iz @ code_components_prev…cbf8c8.min.js.br:77
+dP @ code_components_prev…cbf8c8.min.js.br:89
+dM @ code_components_prev…cbf8c8.min.js.br:89
+dG @ code_components_prev…cbf8c8.min.js.br:89
+dk @ code_components_prev…cbf8c8.min.js.br:89
+(anonymous) @ code_components_prev…cbf8c8.min.js.br:89
+SR @ code_components_prev…cbf8c8.min.js.br:89
+iR @ code_components_prev…cbf8c8.min.js.br:77
+d$ @ code_components_prev…cbf8c8.min.js.br:89
+lO @ code_components_prev…cbf8c8.min.js.br:77
+lN @ code_components_prev…cbf8c8.min.js.br:77
+lv @ code_components_prev…cbf8c8.min.js.br:77
+i @ code_components_prev…cbf8c8.min.js.br:28Understand this error
+ ❌ HAC Login error: Error: HAC API returned empty or invalid response. Please verify your credentials. Response was: ""
+    at loginToHAC (hacApi.ts:220:13)
+    at async handleLogin (Login.tsx:61:22)
+(anonymous) @ code_components_prev…cbf8c8.min.js.br:28
+r @ code_components_prev…cbf8c8.min.js.br:69
+error @ code_components_prev…cbf8c8.min.js.br:28
+loginToHAC @ hacApi.ts:246
+await in loginToHAC
+handleLogin @ Login.tsx:61
+y @ code_components_prev…cbf8c8.min.js.br:77
+i @ code_components_prev…cbf8c8.min.js.br:28
+ik @ code_components_prev…cbf8c8.min.js.br:77
+ij @ code_components_prev…cbf8c8.min.js.br:77
+iz @ code_components_prev…cbf8c8.min.js.br:77
+dP @ code_components_prev…cbf8c8.min.js.br:89
+dM @ code_components_prev…cbf8c8.min.js.br:89
+dG @ code_components_prev…cbf8c8.min.js.br:89
+dk @ code_components_prev…cbf8c8.min.js.br:89
+(anonymous) @ code_components_prev…cbf8c8.min.js.br:89
+SR @ code_components_prev…cbf8c8.min.js.br:89
+iR @ code_components_prev…cbf8c8.min.js.br:77
+d$ @ code_components_prev…cbf8c8.min.js.br:89
+lO @ code_components_prev…cbf8c8.min.js.br:77
+lN @ code_components_prev…cbf8c8.min.js.br:77
+lv @ code_components_prev…cbf8c8.min.js.br:77
+i @ code_components_prev…cbf8c8.min.js.br:28Understand this error
+ ❌ Error details: {name: 'Error', message: 'HAC API returned empty or invalid response. Please verify your credentials. Response was: ""', stack: 'Error: HAC API returned empty or invalid response.…app/screens/Auth/Login.tsx?t=1772365820525:64:22)'}

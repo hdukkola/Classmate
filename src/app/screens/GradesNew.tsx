@@ -1,16 +1,32 @@
 import { motion } from "motion/react";
 import { useNavigate } from "react-router";
-import { getClassesByQuarter } from "../data/mockData";
 import { getGradeBadge, getBadgeTextColor, getGradeGlow } from "../utils/gradeBadges";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
+import { fetchGrades } from "../services/hacApi";
 
 export function GradesNew() {
   const navigate = useNavigate();
   const [selectedPeriod, setSelectedPeriod] = useState("current");
+  const [classes, setClasses] = useState<any[]>([]);
 
-  // Get classes for the selected period
-  const displayClasses = getClassesByQuarter(selectedPeriod);
+  useEffect(() => {
+    async function loadGrades() {
+      const result = await fetchGrades();
+      console.log("📊 Grades: Fetched grades:", result);
+      
+      if (result?.classes) {
+        // Process classes - no need to combine teacher since there's no teacher
+        const processed = result.classes.map((cls: any) => ({
+          ...cls,
+          fullName: cls.name // Just use the name directly
+        }));
+        setClasses(processed);
+      }
+    }
+    
+    loadGrades();
+  }, []);
 
   return (
     <div className="min-h-screen pb-32" style={{ backgroundColor: "var(--color-bg-primary)" }}>
@@ -40,7 +56,7 @@ export function GradesNew() {
         </p>
       </motion.div>
 
-      {/* Quarter/Marking Period Selector */}
+      {/* Quarter Selector */}
       <div className="px-5 mb-5">
         <div 
           className="flex gap-2 p-1.5 rounded-[16px]"
@@ -73,12 +89,11 @@ export function GradesNew() {
 
       {/* Classes List */}
       <div className="px-4 space-y-4">
-        {displayClasses.map((cls, index) => (
+        {classes.map((cls, index) => (
           <motion.button
-            key={`${selectedPeriod}-${cls.id}`}
+            key={cls.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
             transition={{ delay: index * 0.05 }}
             onClick={() => navigate(`/class/${cls.id}`)}
             className="w-full rounded-[20px] p-5 flex items-center gap-4 active:scale-[0.98] transition-transform"
@@ -89,23 +104,48 @@ export function GradesNew() {
           >
             {/* Grade Circle */}
             <div className="flex-shrink-0 relative" style={{ width: "60px", height: "60px" }}>
-              <img 
-                src={getGradeBadge(cls.grade)}
-                alt="Grade Badge"
-                className="w-full h-full"
-                style={{ filter: `drop-shadow(0 4px 12px ${getGradeGlow(cls.grade)})` }}
-              />
-              <span
-                className="absolute inset-0 flex items-center justify-center"
-                style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "18px",
-                  fontWeight: 700,
-                  color: getBadgeTextColor(cls.grade),
-                }}
-              >
-                {cls.grade}
-              </span>
+              {cls.grade > 0 ? (
+                <>
+                  <img 
+                    src={getGradeBadge(cls.grade)!}
+                    alt="Grade Badge"
+                    className="w-full h-full"
+                    style={{ filter: `drop-shadow(0 4px 12px ${getGradeGlow(cls.grade)})` }}
+                  />
+                  <span
+                    className="absolute inset-0 flex items-center justify-center"
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "18px",
+                      fontWeight: 700,
+                      color: getBadgeTextColor(cls.grade),
+                    }}
+                  >
+                    {cls.grade}
+                  </span>
+                </>
+              ) : (
+                <div
+                  className="rounded-full flex items-center justify-center"
+                  style={{
+                    width: "60px",
+                    height: "60px",
+                    backgroundColor: "var(--color-bg-secondary)",
+                    border: "2px solid var(--color-text-muted)"
+                  }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      color: "var(--color-text-muted)",
+                    }}
+                  >
+                    --
+                  </span>
+                </div>
+              )}
             </div>
 
             {/* Class Info */}
@@ -119,7 +159,7 @@ export function GradesNew() {
                   marginBottom: "4px",
                 }}
               >
-                {cls.name}
+                {cls.fullName}
               </h3>
               <p
                 style={{
@@ -128,11 +168,11 @@ export function GradesNew() {
                   color: "var(--color-text-secondary)",
                 }}
               >
-                {cls.teacher}
+                {cls.grade > 0 ? `Grade: ${cls.grade}%` : 'No grade yet'}
               </p>
             </div>
 
-            {/* Arrow Indicator */}
+            {/* Arrow */}
             <ChevronDown
               className="flex-shrink-0 -rotate-90"
               style={{

@@ -1,24 +1,62 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { AlertTriangle, TrendingUp, TrendingDown, Target, Award, BookOpen, Flame, Zap, Clock, BarChart3 } from "lucide-react";
-import { calculateGPA, classes, weeklyPerformanceData, studyStreak, achievements } from "../data/mockData";
 import { getGradeBadge, getBadgeTextColor, getGradeGlow, getGradeColor } from "../utils/gradeBadges";
 import { AreaChart, Area, XAxis, YAxis, ResponsiveContainer, Tooltip, BarChart, Bar, RadarChart, PolarGrid, PolarAngleAxis, Radar } from "recharts";
+import { fetchGrades } from "../services/hacApi";
 
 export function Analytics() {
+  const [classes, setClasses] = useState<any[]>([]);
+
+  useEffect(() => {
+    loadGrades();
+  }, []);
+
+  const loadGrades = async () => {
+    try {
+      const grades = await fetchGrades();
+      if (grades && grades.classes) {
+        setClasses(grades.classes);
+      }
+    } catch (error) {
+      console.error("Error loading grades:", error);
+    }
+  };
+
+  const calculateGPA = (classList: any[]) => {
+    if (classList.length === 0) return 0;
+    const total = classList.reduce((sum, cls) => sum + cls.grade, 0);
+    return total / classList.length;
+  };
+
+  const weeklyPerformanceData = [
+    { week: "W1", score: 92 },
+    { week: "W2", score: 89 },
+    { week: "W3", score: 94 },
+    { week: "W4", score: calculateGPA(classes) },
+  ];
+
+  const studyStreak = 12;
+  
+  const achievements = [
+    { id: 1, title: "4.0 GPA", description: "Maintain straight A's", icon: "🎯", earned: true, current: 3.8, target: 4.0, color: "#8B5CF6" },
+    { id: 2, title: "Top 10%", description: "Rank in top 10% of class", icon: "📈", earned: false, current: 12, target: 10, color: "#3B82F6" },
+    { id: 3, title: "All A's", description: "Get A in every class", icon: "💯", earned: false, current: 4, target: 6, color: "#10B981" },
+  ];
+
   const [simulatedScore, setSimulatedScore] = useState(85);
-  const [selectedClass, setSelectedClass] = useState(classes[0].id);
+  const [selectedClass, setSelectedClass] = useState(classes.length > 0 ? classes[0]?.id : "");
   const [selectedCategory, setSelectedCategory] = useState<"performance" | "summative">("summative");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
   const currentGPA = calculateGPA(classes);
   
   // Find the selected class
-  const currentClass = classes.find(c => c.id === selectedClass) || classes[0];
+  const currentClass = classes.find(c => c.id === selectedClass) || classes[0] || { id: "", grade: 85 };
   
   // Calculate impact based on category weight
   const categoryWeight = selectedCategory === "summative" ? 0.015 : 0.005;
-  const projectedGPA = (currentGPA + (simulatedScore - currentClass.grade) * categoryWeight).toFixed(2);
+  const projectedGPA = currentClass ? (currentGPA + (simulatedScore - (currentClass.grade || 85)) * categoryWeight).toFixed(2) : "0.00";
 
   // Academic Risk Meter
   const riskLevel = currentGPA >= 3.5 ? "low" : currentGPA >= 3.0 ? "medium" : "high";
@@ -37,7 +75,7 @@ export function Analytics() {
   ];
 
   // Calculate stats
-  const avgGrade = classes.reduce((sum, cls) => sum + cls.grade, 0) / classes.length;
+  const avgGrade = classes.length > 0 ? classes.reduce((sum, cls) => sum + cls.grade, 0) / classes.length : 0;
   const classesAtRisk = classes.filter(cls => cls.grade < 75).length;
   const improvementPotential = classes.filter(cls => cls.grade < 90).length;
 
@@ -808,7 +846,7 @@ export function Analytics() {
                   lineHeight: 1
                 }}
               >
-                {studyStreak.current}
+                {studyStreak}
               </motion.span>
               <span style={{
                 fontFamily: "'Inter', sans-serif",
@@ -838,7 +876,7 @@ export function Analytics() {
               color: "#FFFFFF",
               lineHeight: 1
             }}>
-              {studyStreak.longest}
+              {studyStreak}
             </p>
           </div>
         </div>
@@ -849,7 +887,7 @@ export function Analytics() {
         >
           <motion.div
             initial={{ width: 0 }}
-            animate={{ width: `${(studyStreak.current / studyStreak.longest) * 100}%` }}
+            animate={{ width: `${(studyStreak / studyStreak) * 100}%` }}
             transition={{ delay: 0.6, duration: 1, ease: "easeOut" }}
             className="h-full rounded-full"
             style={{ backgroundColor: "#FFFFFF" }}
@@ -861,7 +899,7 @@ export function Analytics() {
           color: "rgba(255, 255, 255, 0.8)",
           marginTop: "8px"
         }}>
-          {studyStreak.longest - studyStreak.current} days to beat your record!
+          {studyStreak - studyStreak} days to beat your record!
         </p>
       </motion.div>
 

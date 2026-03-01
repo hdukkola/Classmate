@@ -1,23 +1,69 @@
+import { useParams, useNavigate } from "react-router";
+import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { useNavigate, useParams } from "react-router";
 import { ArrowLeft, BookOpen, MapPin, ChevronDown } from "lucide-react";
-import { classes, assignments } from "../data/mockData";
-import { getGradeBadge, getBadgeTextColor, getGradeGlow } from "../utils/gradeBadges";
-import { useState } from "react";
+import { fetchGrades, fetchClassAssignments } from "../services/hacApi";
+import { getGradeColor, getGradeBadge, getBadgeTextColor, getGradeGlow } from "../utils/gradeBadges";
 
 export function ClassDetail() {
+  const { classId } = useParams<{ classId: string }>();
   const navigate = useNavigate();
-  const { classId } = useParams();
-  const [performanceExpanded, setPerformanceExpanded] = useState(false);
-  const [summativeExpanded, setSummativeExpanded] = useState(false);
-  
-  const classData = classes.find(c => c.id === classId);
-  const classAssignments = assignments.filter(a => a.classId === classId);
-  const performanceAssignments = classAssignments.filter(a => a.category === "performance");
-  const summativeAssignments = classAssignments.filter(a => a.category === "summative");
-  
+  const [classData, setClassData] = useState<any>(null);
+  const [assignments, setAssignments] = useState<any[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    loadClassData();
+  }, [classId]);
+
+  const loadClassData = async () => {
+    try {
+      const grades = await fetchGrades();
+      if (grades && grades.classes) {
+        const foundClass = grades.classes.find((c: any) => c.id === classId);
+        if (foundClass) {
+          setClassData(foundClass);
+          
+          // Try to load assignments for this class
+          try {
+            const assignmentsData = await fetchClassAssignments(classId!);
+            setAssignments(assignmentsData.assignments || []);
+          } catch (error) {
+            console.error("Error loading assignments:", error);
+            setAssignments([]);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error loading class data:", error);
+    }
+  };
+
+  // Show placeholder immediately while data loads
+  if (!classData) {
+    return (
+      <div className="min-h-screen" style={{ backgroundColor: "var(--color-bg-primary)" }}>
+        <div className="px-4 pt-6">
+          <div className="h-8 w-32 bg-gray-700 rounded mb-4 animate-pulse"></div>
+          <div className="h-12 w-64 bg-gray-700 rounded mb-6 animate-pulse"></div>
+        </div>
+      </div>
+    );
+  }
+
+  const filteredAssignments = selectedCategory === "all" 
+    ? assignments 
+    : assignments.filter(a => a.category === selectedCategory);
+
+  const categories = [
+    { id: "all", label: "All" },
+    { id: "summative", label: "Summative" },
+    { id: "performance", label: "Performance" },
+    { id: "practice", label: "Practice" }
+  ];
+
   // Calculate category grades
-  const calculateCategoryGrade = (categoryAssignments: typeof classAssignments) => {
+  const calculateCategoryGrade = (categoryAssignments: typeof assignments) => {
     if (categoryAssignments.length === 0) return 0;
     const totalWeight = categoryAssignments.reduce((sum, a) => sum + a.weight, 0);
     const weightedScore = categoryAssignments.reduce((sum, a) => {
@@ -37,13 +83,9 @@ export function ClassDetail() {
     return num + "th";
   };
   
-  const performanceGrade = calculateCategoryGrade(performanceAssignments);
-  const summativeGrade = calculateCategoryGrade(summativeAssignments);
+  const performanceGrade = calculateCategoryGrade(assignments.filter(a => a.category === "performance"));
+  const summativeGrade = calculateCategoryGrade(assignments.filter(a => a.category === "summative"));
   
-  if (!classData) {
-    return <div>Class not found</div>;
-  }
-
   return (
     <div 
       className="min-h-screen pb-24"
@@ -214,7 +256,7 @@ export function ClassDetail() {
         >
           {/* Performance Header */}
           <button
-            onClick={() => setPerformanceExpanded(!performanceExpanded)}
+            onClick={() => setSelectedCategory("performance")}
             className="w-full p-5 flex items-center gap-4 active:scale-[0.99] transition-transform"
           >
             {/* Grade Badge */}
@@ -258,7 +300,7 @@ export function ClassDetail() {
                   color: "var(--color-text-secondary)",
                 }}
               >
-                {performanceAssignments.length} assignments
+                {assignments.filter(a => a.category === "performance").length} assignments
               </p>
             </div>
 
@@ -269,13 +311,13 @@ export function ClassDetail() {
                 width: "20px",
                 height: "20px",
                 color: "var(--color-text-muted)",
-                transform: performanceExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                transform: selectedCategory === "performance" ? "rotate(180deg)" : "rotate(0deg)",
               }}
             />
           </button>
 
           {/* Performance Assignments Dropdown */}
-          {performanceExpanded && (
+          {selectedCategory === "performance" && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
@@ -284,7 +326,7 @@ export function ClassDetail() {
               className="border-t"
               style={{ borderColor: "var(--color-text-muted)" }}
             >
-              {performanceAssignments.map((assignment, index) => {
+              {assignments.filter(a => a.category === "performance").map((assignment, index) => {
                 const percentage = Math.round((assignment.score / assignment.maxScore) * 100);
                 return (
                   <div
@@ -354,7 +396,7 @@ export function ClassDetail() {
         >
           {/* Summative Header */}
           <button
-            onClick={() => setSummativeExpanded(!summativeExpanded)}
+            onClick={() => setSelectedCategory("summative")}
             className="w-full p-5 flex items-center gap-4 active:scale-[0.99] transition-transform"
           >
             {/* Grade Badge */}
@@ -398,7 +440,7 @@ export function ClassDetail() {
                   color: "var(--color-text-secondary)",
                 }}
               >
-                {summativeAssignments.length} assignments
+                {assignments.filter(a => a.category === "summative").length} assignments
               </p>
             </div>
 
@@ -409,13 +451,13 @@ export function ClassDetail() {
                 width: "20px",
                 height: "20px",
                 color: "var(--color-text-muted)",
-                transform: summativeExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                transform: selectedCategory === "summative" ? "rotate(180deg)" : "rotate(0deg)",
               }}
             />
           </button>
 
           {/* Summative Assignments Dropdown */}
-          {summativeExpanded && (
+          {selectedCategory === "summative" && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
@@ -424,7 +466,7 @@ export function ClassDetail() {
               className="border-t"
               style={{ borderColor: "var(--color-text-muted)" }}
             >
-              {summativeAssignments.map((assignment, index) => {
+              {assignments.filter(a => a.category === "summative").map((assignment, index) => {
                 const percentage = Math.round((assignment.score / assignment.maxScore) * 100);
                 return (
                   <div
@@ -513,7 +555,7 @@ export function ClassDetail() {
               lineHeight: 1
             }}
           >
-            {classAssignments.length}
+            {assignments.length}
           </p>
         </motion.div>
 

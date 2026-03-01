@@ -1,0 +1,83 @@
+✅ Grades received: 
+{success: true, classes: Array(8)}
+classes
+: 
+Array(8)
+0
+: 
+{id: 'class_1', name: '1100B - 8', teacher: 'ENGLISH I B', grade: 0, credits: 1, …}
+1
+: 
+{id: 'class_2', name: '2200B - 2', teacher: 'GEOMETRY B', grade: 0, credits: 1, …}
+2
+: 
+{id: 'class_3', name: '3111B - 22', teacher: 'BIOLOGY HONORS B', grade: 0, credits: 1, …}
+3
+: 
+{id: 'class_4', name: '4340B - 27   HUMAN', teacher: 'GEOGRAPHY AP B', grade: 0, credits: 1, …}
+4
+: 
+{id: 'class_5', name: '5102B - 11   LIFETIME FITNESS/WELLNESS B', teacher: 'Teacher', grade: 0, credits: 1, …}
+5
+: 
+{id: 'class_6', name: '6023B - 14   SPANISH', teacher: 'II HONORS B', grade: 0, credits: 1, …}
+6
+: 
+{id: 'class_7', name: '7201B - 3    COMPUTER', teacher: 'SCIENCE I B', grade: 0, credits: 1, …}
+7
+: 
+{id: 'class_8', name: '7401B - 5    PRIN OF', teacher: 'HEALTH SCI B', grade: 0, credits: 1, …}
+length
+: 
+8
+[[Prototype]]
+: 
+Array(0)
+success
+: 
+true
+[[Prototype]]
+: 
+Object
+constructor
+: 
+ƒ Object()
+hasOwnProperty
+: 
+ƒ hasOwnProperty()
+isPrototypeOf
+: 
+ƒ isPrototypeOf()
+propertyIsEnumerable
+: 
+ƒ propertyIsEnumerable()
+toLocaleString
+: 
+ƒ toLocaleString()
+toString
+: 
+ƒ toString()
+valueOf
+: 
+ƒ valueOf()
+__defineGetter__
+: 
+ƒ __defineGetter__()
+__defineSetter__
+: 
+ƒ __defineSetter__()
+__lookupGetter__
+: 
+ƒ __lookupGetter__()
+__lookupSetter__
+: 
+ƒ __lookupSetter__()
+__proto__
+: 
+(...)
+get __proto__
+: 
+ƒ __proto__()
+set __proto__
+: 
+ƒ __proto__()

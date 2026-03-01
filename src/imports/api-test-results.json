@@ -1,0 +1,54 @@
+{
+  "summary": {
+    "message": "Testing multiple API call methods to find what works",
+    "credentialsConfirmedWorking": "User confirmed login works at hac.coppellisd.com",
+    "possibleIssues": [
+      "HAC API service might be down/broken",
+      "API might have changed its endpoint format",
+      "API might require different HTTP method or headers",
+      "Rate limiting or IP blocking"
+    ]
+  },
+  "test1_GET_query_params": {
+    "method": "GET",
+    "endpoint": "/api/name",
+    "status": 200,
+    "bodyLength": 0,
+    "body": "",
+    "working": false
+  },
+  "test2_POST_json": {
+    "method": "POST",
+    "endpoint": "/api/name",
+    "contentType": "application/json",
+    "status": 404,
+    "bodyLength": 18,
+    "body": "404 page not found",
+    "working": true
+  },
+  "test3_POST_form": {
+    "method": "POST",
+    "endpoint": "/api/name",
+    "contentType": "application/x-www-form-urlencoded",
+    "status": 404,
+    "bodyLength": 18,
+    "body": "404 page not found",
+    "working": true
+  },
+  "test4_GET_classes": {
+    "method": "GET",
+    "endpoint": "/api/classes",
+    "status": 200,
+    "bodyLength": 2,
+    "bodyPreview": "[]",
+    "working": false
+  },
+  "test5_login_endpoint": {
+    "method": "GET",
+    "endpoint": "/api/login",
+    "status": 404,
+    "bodyLength": 18,
+    "bodyPreview": "404 page not found",
+    "working": true
+  }
+}

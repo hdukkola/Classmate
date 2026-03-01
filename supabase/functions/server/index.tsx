@@ -3,6 +3,7 @@ import { cors } from "npm:hono/cors";
 import { logger } from "npm:hono/logger";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import * as kv from "./kv_store.tsx";
+import { hacLogin, hacGetClasses, hacGetAssignments } from "./hac_scraper.tsx";
 
 const app = new Hono();
 
@@ -10,13 +11,15 @@ const app = new Hono();
 // MIDDLEWARE
 // ========================================
 
+console.log("🚀 ClassMate Server v2.80 - Parse Interim Report for Grades (Q1-Q4)"); // Force redeploy v2.80
+
 app.use("*", logger(console.log));
 
 app.use(
   "/*",
   cors({
     origin: "*",
-    allowHeaders: ["Content-Type", "Authorization"],
+    allowHeaders: ["Content-Type", "Authorization", "X-HAC-Session-Token"], // Allow custom header
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
     maxAge: 600,
@@ -380,11 +383,11 @@ Remember: You're Flora, their supportive AI study buddy. Be warm, helpful, and m
     }
     // Greetings
     else if (messageLower.includes("hello") || messageLower.includes("hi ") || messageLower.includes("hey")) {
-      fallbackResponse = "Hey there! 👋 I'm Flora, your AI study companion! 🌸\n\nI'm here to help you with:\n• Study strategies & time management ⏰\n• Grade analysis & GPA insights 📊\n• Motivation & goal setting 🎯\n• Subject-specific tips 📚\n• Test prep & exam strategies 📝\n\nWhat can I help you with today?";
+      fallbackResponse = "Hey there! 👋 I'm Flora, your AI study companion! \n\nI'm here to help you with:\n• Study strategies & time management ⏰\n Grade analysis & GPA insights 📊\n• Motivation & goal setting 🎯\n• Subject-specific tips 📚\n• Test prep & exam strategies 📝\n\nWhat can I help you with today?";
     }
     // Default helpful response
     else {
-      fallbackResponse = "Hey! I'm Flora 🌸\n\nI'm currently running on local mode (OpenRouter is temporarily unavailable), but I can still help!\n\nI can give you advice on:\n• 📚 Study habits & strategies\n• 📊 Grade analysis (enable in Settings!)\n• 🎯 Goal setting & motivation\n• ⏰ Time management\n• 📝 Test preparation\n• ���️ Subject-specific tips\n\nWhat would you like to know about?";
+      fallbackResponse = "Hey! I'm Flora 🌸\n\nI'm currently running on local mode (OpenRouter is temporarily unavailable), but I can still help!\n\nI can give you advice on:\n• 📚 Study habits & strategies\n• 📊 Grade analysis (enable in Settings!)\n• 🎯 Goal setting & motivation\n• ⏰ Time management\n• 📝 Test preparation\n• ️ Subject-specific tips\n\nWhat would you like to know about?";
     }
     
     console.log(`✅ Generated fallback response (${fallbackResponse.length} chars)`);
@@ -514,6 +517,248 @@ app.delete("/make-server-9a43014a/ai/history", async (c) => {
 // AUTHENTICATION ROUTES
 // ========================================
 
+// HAC PowerSchool Integration Routes
+// Uses homeaccesscenterapi.vercel.app for all ISDs
+
+app.post("/make-server-9a43014a/hac/login", async (c) => {
+  try {
+    const { username, password, districtUrl } = await c.req.json();
+    
+    console.log("🎓 HAC Login Request (USING SCRAPER):", { username, districtUrl });
+    
+    if (!username || !password || !districtUrl) {
+      return c.json({ 
+        success: false,
+        error: "Missing required fields: username, password, or districtUrl" 
+      }, 400);
+    }
+
+    // Clean up the district URL - remove any trailing slashes and protocol
+    let cleanUrl = districtUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    
+    console.log("🚀 Using DIRECT HAC WEB SCRAPER (no third-party API!)");
+    console.log("🔗 District URL:", cleanUrl);
+    
+    // Use our HAC scraper!
+    const session = await hacLogin({
+      districtUrl: cleanUrl,
+      username,
+      password,
+    });
+    
+    console.log("✅ HAC scraper login successful! Student:", session.studentName);
+
+    // Store session in KV for this user with credentials for future API calls
+    const sessionId = `hac_session_${username}_${Date.now()}`;
+    await kv.set(sessionId, {
+      username,
+      password, // Store encrypted in production!
+      districtUrl: cleanUrl,
+      fullUrl: `https://${cleanUrl}`,
+      studentName: session.studentName,
+      studentId: username,
+      cookies: session.cookies,
+      createdAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours
+    });
+
+    return c.json({
+      success: true,
+      sessionToken: sessionId,
+      studentName: session.studentName,
+      studentId: username,
+    });
+
+  } catch (error: any) {
+    console.error("❌ HAC login exception:", error);
+    console.error("❌ Error stack:", error.stack);
+    return c.json({ 
+      success: false,
+      error: error.message || "Failed to log in"
+    }, 500);
+  }
+});
+
+app.post("/make-server-9a43014a/hac/grades", async (c) => {
+  try {
+    // Use custom header to avoid Supabase JWT validation
+    const sessionToken = c.req.header("X-HAC-Session-Token");
+    console.log("📊 /hac/grades - Session token:", sessionToken ? "Present" : "Missing");
+    
+    if (!sessionToken) {
+      return c.json({ error: "Missing session token" }, 401);
+    }
+
+    console.log("📊 Session ID:", sessionToken);
+    
+    const session = await kv.get(sessionToken);
+    console.log("📊 Session from KV:", session ? "Found" : "Not found");
+
+    if (!session) {
+      console.error("❌ Session not found in KV store");
+      console.error("   Requested session ID:", sessionToken);
+      return c.json({ error: "Invalid or expired session" }, 401);
+    }
+
+    console.log("📊 Fetching grades for:", session.username);
+
+    // Use our HAC scraper to get classes!
+    console.log("🚀 Using HAC scraper to fetch grades...");
+    
+    try {
+      const classes = await hacGetClasses(
+        { 
+          cookies: session.cookies, 
+          studentName: session.studentName 
+        },
+        session.districtUrl
+      );
+      
+      console.log(`✅ Retrieved ${classes.length} classes from HAC`);
+
+      return c.json({
+        success: true,
+        classes: classes,
+      });
+    } catch (error: any) {
+      // Check if it's a session expiration error
+      if (error.message.includes("Session expired") || error.message.includes("302")) {
+        console.log("🔄 Session expired, attempting to re-login...");
+        
+        // Re-login using stored credentials
+        try {
+          const newSession = await hacLogin({
+            districtUrl: session.districtUrl,
+            username: session.username,
+            password: session.password,
+          });
+          
+          console.log("✅ Re-login successful!");
+          
+          // Update the stored session with new cookies
+          await kv.set(sessionToken, {
+            ...session,
+            cookies: newSession.cookies,
+            studentName: newSession.studentName,
+            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+          });
+          
+          // Retry fetching classes with new session
+          const classes = await hacGetClasses(
+            { 
+              cookies: newSession.cookies, 
+              studentName: newSession.studentName 
+            },
+            session.districtUrl
+          );
+          
+          console.log(`✅ Retrieved ${classes.length} classes after re-login`);
+          
+          return c.json({
+            success: true,
+            classes: classes,
+            reloginRequired: true, // Let frontend know we had to re-login
+          });
+        } catch (reloginError: any) {
+          console.error("❌ Re-login failed:", reloginError.message);
+          return c.json({ 
+            error: "Session expired and re-login failed. Please log in again manually.",
+            classes: [] 
+          }, 401);
+        }
+      }
+      
+      // If it's a different error, throw it
+      throw error;
+    }
+
+  } catch (error: any) {
+    console.error("❌ Error fetching grades:", error);
+    console.error("❌ Error stack:", error.stack);
+    return c.json({ 
+      error: error.message || "Failed to fetch grades",
+      classes: [] 
+    }, 500);
+  }
+});
+
+app.post("/make-server-9a43014a/hac/assignments", async (c) => {
+  try {
+    // Use custom header to avoid Supabase JWT validation
+    const sessionToken = c.req.header("X-HAC-Session-Token");
+    console.log("📝 /hac/assignments - Session token:", sessionToken ? "Present" : "Missing");
+    
+    if (!sessionToken) {
+      return c.json({ error: "Missing session token" }, 401);
+    }
+
+    console.log("📝 Session ID:", sessionToken);
+    
+    const session = await kv.get(sessionToken);
+    console.log("📝 Session from KV:", session ? "Found" : "Not found");
+
+    if (!session) {
+      console.error("❌ Session not found in KV store");
+      console.error("   Requested session ID:", sessionToken);
+      return c.json({ error: "Invalid or expired session" }, 401);
+    }
+
+    const { classId } = await c.req.json();
+    
+    console.log("📝 Fetching assignments for classId:", classId);
+
+    // Use our HAC scraper to get assignments
+    console.log("🚀 Using HAC scraper to fetch assignments...");
+    
+    const assignmentData = await hacGetAssignments(
+      { 
+        cookies: session.cookies, 
+        studentName: session.studentName 
+      },
+      session.districtUrl,
+      classId
+    );
+    
+    console.log(`✅ Retrieved ${assignmentData.assignments.length} total assignments`);
+    console.log(`   Performance: ${assignmentData.performance.length}`);
+    console.log(`   Summative: ${assignmentData.summative.length}`);
+
+    return c.json({ 
+      success: true,
+      ...assignmentData
+    });
+
+  } catch (error: any) {
+    console.error("❌ Error fetching assignments:", error);
+    return c.json({ 
+      assignments: [],
+      categories: [],
+      performance: [],
+      summative: [],
+      error: error.message
+    }, 500);
+  }
+});
+
+app.post("/make-server-9a43014a/hac/logout", async (c) => {
+  try {
+    const authHeader = c.req.header("Authorization");
+    if (!authHeader) {
+      return c.json({ success: true });
+    }
+
+    const sessionId = authHeader.replace("Bearer ", "");
+    await kv.del(sessionId);
+
+    console.log("👋 HAC session cleared");
+    return c.json({ success: true });
+
+  } catch (error: any) {
+    console.error("❌ Error during logout:", error);
+    return c.json({ success: true }); // Always succeed on logout
+  }
+});
+
 // Sign up route
 app.post("/make-server-9a43014a/auth/signup", async (c) => {
   try {
@@ -555,13 +800,471 @@ app.post("/make-server-9a43014a/auth/signup", async (c) => {
   }
 });
 
-console.log("🚀 Server starting...");
+// Health check endpoint
+app.get("/make-server-9a43014a/health", (c) => {
+  console.log("❤️ Health check called");
+  return c.json({ status: "OK", timestamp: new Date().toISOString() });
+});
+
+// Simple test endpoint - just fetch HAC login page
+app.get("/make-server-9a43014a/test-hac-reachable", async (c) => {
+  console.log("🧪 Testing if HAC is reachable...");
+  
+  try {
+    const loginUrl = "https://hac.coppellisd.com/HomeAccess/Account/LogOn";
+    
+    const response = await fetch(loginUrl, {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      },
+    });
+    
+    const html = await response.text();
+    
+    return c.json({
+      success: true,
+      status: response.status,
+      reachable: response.ok,
+      htmlLength: html.length,
+      htmlPreview: html.substring(0, 500),
+      headers: Object.fromEntries(response.headers.entries()),
+    });
+    
+  } catch (error: any) {
+    console.error("❌ HAC unreachable:", error);
+    return c.json({ 
+      success: false,
+      error: error.message,
+      stack: error.stack 
+    }, 500);
+  }
+});
+
+// Debug endpoint to analyze HAC login page structure
+app.get("/make-server-9a43014a/debug-hac-login-page", async (c) => {
+  console.log("🔍 Analyzing HAC login page structure...");
+  
+  try {
+    const loginUrl = "https://hac.coppellisd.com/HomeAccess/Account/LogOn";
+    
+    const response = await fetch(loginUrl, {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      },
+    });
+    
+    const html = await response.text();
+    
+    // Extract form details
+    const formMatch = html.match(/<form[^>]*action=["']([^"']+)["'][^>]*>(.*?)<\/form>/is);
+    const formAction = formMatch ? formMatch[1] : "Not found";
+    const formHtml = formMatch ? formMatch[2] : "";
+    
+    // Extract all input fields
+    const inputs: any[] = [];
+    const inputRegex = /<input[^>]*>/gi;
+    const inputMatches = html.matchAll(inputRegex);
+    
+    for (const match of inputMatches) {
+      const input = match[0];
+      const typeMatch = input.match(/type=["']([^"']+)["']/);
+      const nameMatch = input.match(/name=["']([^"']+)["']/);
+      const valueMatch = input.match(/value=["']([^"']*)["']/);
+      const idMatch = input.match(/id=["']([^"']+)["']/);
+      
+      inputs.push({
+        type: typeMatch ? typeMatch[1] : "text",
+        name: nameMatch ? nameMatch[1] : null,
+        value: valueMatch ? valueMatch[1] : "",
+        id: idMatch ? idMatch[1] : null,
+        html: input,
+      });
+    }
+    
+    // Extract select fields (like Database dropdown)
+    const selects: any[] = [];
+    const selectRegex = /<select[^>]*>(.*?)<\/select>/gis;
+    const selectMatches = html.matchAll(selectRegex);
+    
+    for (const match of selectMatches) {
+      const selectTag = match[0];
+      const nameMatch = selectTag.match(/name=["']([^"']+)["']/);
+      const idMatch = selectTag.match(/id=["']([^"']+)["']/);
+      
+      // Extract options
+      const options: any[] = [];
+      const optionRegex = /<option[^>]*value=["']([^"']*)["'][^>]*>(.*?)<\/option>/gi;
+      const optionMatches = match[1].matchAll(optionRegex);
+      
+      for (const optMatch of optionMatches) {
+        options.push({
+          value: optMatch[1],
+          text: optMatch[2].trim(),
+        });
+      }
+      
+      selects.push({
+        name: nameMatch ? nameMatch[1] : null,
+        id: idMatch ? idMatch[1] : null,
+        options,
+      });
+    }
+    
+    return c.json({
+      success: true,
+      loginUrl,
+      formAction,
+      inputs: inputs.filter(i => i.name), // Only show inputs with names
+      selects,
+      analysis: {
+        totalInputs: inputs.length,
+        namedInputs: inputs.filter(i => i.name).length,
+        hiddenInputs: inputs.filter(i => i.type === "hidden").length,
+        selectFields: selects.length,
+        hasUsernameField: inputs.some(i => i.name?.toLowerCase().includes("username")),
+        hasPasswordField: inputs.some(i => i.name?.toLowerCase().includes("password")),
+        hasDatabaseField: selects.some(s => s.name?.toLowerCase().includes("database")),
+      },
+      recommendation: "Use the exact field names shown in 'inputs' and 'selects' for login",
+    });
+    
+  } catch (error: any) {
+    console.error("❌ Debug error:", error);
+    return c.json({ 
+      error: error.message,
+      stack: error.stack 
+    }, 500);
+  }
+});
+
+// Debug endpoint to test full HAC login flow
+app.post("/make-server-9a43014a/debug-hac-full-flow", async (c) => {
+  console.log("🧪 DEBUG: Testing full HAC login flow...");
+  
+  try {
+    const { username, password, districtUrl } = await c.req.json();
+    
+    if (!username || !password || !districtUrl) {
+      return c.json({ error: "Missing credentials" }, 400);
+    }
+    
+    const cleanUrl = districtUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const loginUrl = `https://${cleanUrl}/HomeAccess/Account/LogOn`;
+    
+    const steps: any[] = [];
+    
+    // STEP 1: Fetch login page
+    steps.push({ step: 1, action: "Fetching login page", url: loginUrl });
+    
+    const step1Response = await fetch(loginUrl, {
+      method: "GET",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+      },
+    });
+    
+    const step1Html = await step1Response.text();
+    const step1Cookies = step1Response.headers.getSetCookie();
+    
+    steps.push({
+      step: 1,
+      status: step1Response.status,
+      cookiesReceived: step1Cookies.length,
+      cookies: step1Cookies,
+      htmlLength: step1Html.length,
+      htmlPreview: step1Html.substring(0, 300),
+    });
+    
+    // Extract token
+    const tokenMatch = step1Html.match(/<input[^>]*name="__RequestVerificationToken"[^>]*value="([^"]*)"/i);
+    if (!tokenMatch) {
+      steps.push({ step: 1, error: "No verification token found" });
+      return c.json({ steps, error: "No verification token" });
+    }
+    
+    const token = tokenMatch[1];
+    steps.push({ step: 1, token: token.substring(0, 30) + "..." });
+    
+    // Extract database value
+    let dbValue = "10";
+    const selectMatch = step1Html.match(/<select[^>]*name="Database"[^>]*>(.*?)<\/select>/is);
+    if (selectMatch) {
+      const optionMatch = selectMatch[1].match(/<option[^>]*value="([^"]*)"/i);
+      if (optionMatch && optionMatch[1]) {
+        dbValue = optionMatch[1];
+      }
+    }
+    steps.push({ step: 1, databaseValue: dbValue });
+    
+    // Build initial cookie string
+    const initialCookies = step1Cookies.map(c => c.split(";")[0]).join("; ");
+    
+    // STEP 2: Submit login
+    steps.push({ step: 2, action: "Submitting login credentials" });
+    
+    const formData = new URLSearchParams({
+      "__RequestVerificationToken": token,
+      "Database": dbValue,
+      "LogOnDetails.UserName": username,
+      "LogOnDetails.Password": password,
+    });
+    
+    const step2Response = await fetch(loginUrl, {
+      method: "POST",
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": initialCookies,
+        "Referer": loginUrl,
+        "Origin": `https://${cleanUrl}`,
+      },
+      body: formData.toString(),
+      redirect: "manual",
+    });
+    
+    const step2Cookies = step2Response.headers.getSetCookie();
+    const step2Location = step2Response.headers.get("Location");
+    
+    steps.push({
+      step: 2,
+      status: step2Response.status,
+      redirectLocation: step2Location,
+      cookiesReceived: step2Cookies.length,
+      cookies: step2Cookies,
+      allHeaders: Object.fromEntries(step2Response.headers.entries()),
+    });
+    
+    // Check if login succeeded
+    if (step2Response.status !== 302 && step2Response.status !== 301) {
+      const step2Html = await step2Response.text();
+      steps.push({
+        step: 2,
+        error: "No redirect received - login likely failed",
+        htmlPreview: step2Html.substring(0, 500),
+      });
+      return c.json({ steps, error: "Login failed - no redirect" });
+    }
+    
+    if (step2Location?.includes("/Account/LogOn")) {
+      steps.push({ step: 2, error: "Redirected back to login - invalid credentials" });
+      return c.json({ steps, error: "Invalid credentials" });
+    }
+    
+    // Merge cookies
+    const cookieMap = new Map<string, string>();
+    initialCookies.split("; ").forEach(cookie => {
+      const [name, value] = cookie.split("=");
+      if (name && value) cookieMap.set(name, value);
+    });
+    step2Cookies.forEach(cookie => {
+      const [name, value] = cookie.split(";")[0].split("=");
+      if (name && value) cookieMap.set(name, value);
+    });
+    const sessionCookies = Array.from(cookieMap.entries()).map(([n, v]) => `${n}=${v}`).join("; ");
+    
+    steps.push({ step: 2, mergedCookies: sessionCookies });
+    
+    // STEP 3: Follow redirect to home page
+    const homeUrl = step2Location?.startsWith("http") ? step2Location : `https://${cleanUrl}${step2Location}`;
+    steps.push({ step: 3, action: "Following redirect to home", url: homeUrl });
+    
+    const step3Response = await fetch(homeUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Cookie": sessionCookies,
+      },
+    });
+    
+    const step3Html = await step3Response.text();
+    
+    steps.push({
+      step: 3,
+      status: step3Response.status,
+      htmlLength: step3Html.length,
+      htmlPreview: step3Html.substring(0, 500),
+    });
+    
+    // STEP 4: Try to fetch Classwork page
+    const classworkUrl = `https://${cleanUrl}/HomeAccess/Content/Student/Assignments.aspx`;
+    steps.push({ step: 4, action: "Fetching Classwork page", url: classworkUrl });
+    
+    const step4Response = await fetch(classworkUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Cookie": sessionCookies,
+      },
+      redirect: "manual",
+    });
+    
+    const step4Location = step4Response.headers.get("Location");
+    
+    steps.push({
+      step: 4,
+      status: step4Response.status,
+      redirectLocation: step4Location,
+    });
+    
+    if (step4Response.status === 302 || step4Response.status === 301) {
+      steps.push({ step: 4, error: "Got redirect - session invalid or page not accessible" });
+      
+      // Try Interim Progress Report as well
+      const reportUrl = `https://${cleanUrl}/HomeAccess/Content/Student/InterimProgressReport.aspx`;
+      steps.push({ step: 5, action: "Trying Interim Progress Report", url: reportUrl });
+      
+      const step5Response = await fetch(reportUrl, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          "Cookie": sessionCookies,
+        },
+        redirect: "manual",
+      });
+      
+      steps.push({
+        step: 5,
+        status: step5Response.status,
+        redirectLocation: step5Response.headers.get("Location"),
+      });
+      
+      if (step5Response.status === 200) {
+        const step5Html = await step5Response.text();
+        steps.push({
+          step: 5,
+          success: true,
+          htmlLength: step5Html.length,
+          htmlPreview: step5Html.substring(0, 500),
+        });
+      }
+    } else if (step4Response.status === 200) {
+      const step4Html = await step4Response.text();
+      
+      // ANALYZE THE HTML STRUCTURE
+      const analysis: any = {
+        htmlLength: step4Html.length,
+        htmlPreview: step4Html.substring(0, 1000),
+      };
+      
+      // Look for class dropdown
+      const dropdownMatch = step4Html.match(/<select[^>]*id=["']plnMain_ddlClasses["'][^>]*>([\s\S]*?)<\/select>/i);
+      analysis.hasClassDropdown = !!dropdownMatch;
+      
+      if (dropdownMatch) {
+        // Extract options
+        const options: any[] = [];
+        const optionRegex = /<option[^>]*value=["']([^"']*)["'][^>]*>(.*?)<\/option>/gi;
+        const optionMatches = dropdownMatch[1].matchAll(optionRegex);
+        
+        for (const match of optionMatches) {
+          options.push({
+            value: match[1],
+            text: match[2].trim(),
+          });
+        }
+        
+        analysis.classOptions = options;
+        analysis.classCount = options.filter(o => o.value).length;
+      }
+      
+      // Look for alternative selects
+      const allSelects: any[] = [];
+      const selectRegex = /<select[^>]*id=["']([^"']*)["'][^>]*>/gi;
+      const selectMatches = step4Html.matchAll(selectRegex);
+      
+      for (const match of selectMatches) {
+        allSelects.push(match[1]);
+      }
+      
+      analysis.allSelectIds = allSelects;
+      
+      // Look for grade tables
+      const tableRegex = /<table[^>]*class=["'][^"']*sg-asp-table[^"']*["'][^>]*>/i;
+      analysis.hasGradeTable = tableRegex.test(step4Html);
+      
+      steps.push({
+        step: 4,
+        success: true,
+        analysis,
+      });
+    }
+    
+    return c.json({ 
+      success: true,
+      steps,
+      summary: {
+        loginPageFetched: steps.find(s => s.step === 1)?.status === 200,
+        loginSubmitted: steps.find(s => s.step === 2)?.status === 302,
+        homePageAccessed: steps.find(s => s.step === 3)?.status === 200,
+        classworkAccessible: steps.find(s => s.step === 4)?.status === 200,
+        interimReportAccessible: steps.find(s => s.step === 5)?.status === 200,
+      }
+    });
+    
+  } catch (error: any) {
+    console.error("❌ Debug error:", error);
+    return c.json({ error: error.message, stack: error.stack }, 500);
+  }
+});
+
+// ========================================
+// SERVER STARTUP
+// ========================================
+
+// NEW: Download full Classwork HTML for inspection
+app.post("/make-server-9a43014a/debug-download-classwork-html", async (c) => {
+  console.log("📥 Downloading full Classwork HTML...");
+  
+  try {
+    const { username, password, districtUrl } = await c.req.json();
+    
+    if (!username || !password || !districtUrl) {
+      return c.json({ error: "Missing credentials" }, 400);
+    }
+    
+    const cleanUrl = districtUrl.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    
+    // Login first
+    const session = await hacLogin({
+      districtUrl: cleanUrl,
+      username,
+      password,
+    });
+    
+    console.log("✅ Logged in, fetching Classwork page...");
+    
+    // Fetch Classwork page
+    const classworkUrl = `https://${cleanUrl}/HomeAccess/Content/Student/Assignments.aspx`;
+    const response = await fetch(classworkUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "Cookie": session.cookies,
+      },
+    });
+    
+    const html = await response.text();
+    
+    console.log(`✅ Downloaded ${html.length} bytes of HTML`);
+    
+    // Return as downloadable text
+    return c.text(html, 200, {
+      "Content-Type": "text/html; charset=utf-8",
+      "Content-Disposition": "attachment; filename=\"hac_classwork.html\"",
+    });
+    
+  } catch (error: any) {
+    console.error("❌ Error:", error);
+    return c.json({ error: error.message }, 500);
+  }
+});
+
+console.log("🚀🚀🚀 ClassMate Server v2.20 - DISCOVER AVAILABLE PAGES 🚀🚀🚀");
+console.log("🔧 Server starting with X-HAC-Session-Token support...");
 console.log("🔑 Checking for OpenRouter API key...");
 const apiKey = Deno.env.get("OPENROUTER_API_KEY");
 if (apiKey) {
   console.log(`✅ OpenRouter API key found: ${apiKey.substring(0, 15)}...`);
 } else {
-  console.log("���️ WARNING: OpenRouter API key not found!");
+  console.log("⚠️ WARNING: OpenRouter API key not found!");
 }
 
 Deno.serve(app.fetch);

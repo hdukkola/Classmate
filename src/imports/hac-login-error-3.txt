@@ -1,0 +1,80 @@
+🔐 Attempting HAC login...
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📍 API URL: https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/login
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 👤 Username: hxd8236
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 🌐 District: https://hac.coppellisd.com
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28  POST https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/login 404 (Not Found)
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+loginToHAC @ hacApi.ts:192
+handleLogin @ Login.tsx:61
+y @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+ik @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+ij @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+iz @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+dP @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dM @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dG @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dk @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+SR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+iR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+d$ @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+lO @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lN @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lv @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28Understand this error
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Response status: 404
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Response headers: {content-type: 'application/json'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📡 Raw response: {"success":false,"error":"Failed to connect to HAC. API returned status 404. The API server may be down."}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 📦 Parsed data: {success: false, error: 'Failed to connect to HAC. API returned status 404. The API server may be down.'}
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ❌ Login failed: Failed to connect to HAC. API returned status 404. The API server may be down.
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+r @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:69
+error @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+loginToHAC @ hacApi.ts:219
+await in loginToHAC
+handleLogin @ Login.tsx:61
+y @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+ik @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+ij @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+iz @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+dP @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dM @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dG @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dk @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+SR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+iR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+d$ @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+lO @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lN @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lv @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28Understand this error
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ❌ HAC Login error: Error: Failed to connect to HAC. API returned status 404. The API server may be down.
+    at loginToHAC (hacApi.ts:220:13)
+    at async handleLogin (Login.tsx:61:22)
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+r @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:69
+error @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+loginToHAC @ hacApi.ts:246
+await in loginToHAC
+handleLogin @ Login.tsx:61
+y @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28
+ik @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+ij @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+iz @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+dP @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dM @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dG @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+dk @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+(anonymous) @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+SR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+iR @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+d$ @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:89
+lO @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lN @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+lv @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:77
+i @ code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28Understand this error
+code_components_preview_iframe-45c712baf9cbf8c8.min.js.br:28 ❌ Error details: {name: 'Error', message: 'Failed to connect to HAC. API returned status 404. The API server may be down.', stack: 'Error: Failed to connect to HAC. API returned stat…app/screens/Auth/Login.tsx?t=1772367090105:64:22)'}

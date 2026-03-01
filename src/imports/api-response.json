@@ -1,0 +1,172 @@
+Full API Response:
+
+{
+  "success": true,
+  "steps": [
+    {
+      "step": 1,
+      "action": "Fetching login page",
+      "url": "https://hac.coppellisd.com/HomeAccess/Account/LogOn"
+    },
+    {
+      "step": 1,
+      "status": 200,
+      "cookiesReceived": 4,
+      "cookies": [
+        "ASP.NET_SessionId=udb43egjqizgu4popenydqau; path=/; secure; HttpOnly; SameSite=Lax",
+        ".AuthCookie=; expires=Tue, 12-Oct-1999 05:00:00 GMT; path=/; secure; HttpOnly; SameSite=Lax",
+        "SPIHACSiteCode=; path=/; HttpOnly",
+        "__RequestVerificationToken_L0hvbWVBY2Nlc3M1=7xpRHwOM2IFo1XaQ-Jfg_04zWG5AUTertTPxRY-Mn4NDA0C3WgBpHQxeoKDYj_srhm9LdOLIWDix6AcZMoaWkzCdRcn-CZ18EAkD3go-u5w1; path=/; HttpOnly"
+      ],
+      "htmlLength": 11675,
+      "htmlPreview": "\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n    <head>\r\n        <meta charset=\"utf-8\" />\r\n\r\n        \r\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\r\n            <title>Login</title>\r\n        \r\n\r\n        <!-- 3rd party CSS our globals override -->\r\n<link  href=\"/HomeAccess/Stylesheets/bootstrap/cs"
+    },
+    {
+      "step": 1,
+      "token": "ITH36a64JVIniHFon4kYzhFY3IxMGp..."
+    },
+    {
+      "step": 1,
+      "databaseValue": "10"
+    },
+    {
+      "step": 2,
+      "action": "Submitting login credentials"
+    },
+    {
+      "step": 2,
+      "status": 302,
+      "redirectLocation": "/HomeAccess/",
+      "cookiesReceived": 2,
+      "cookies": [
+        ".AuthCookie=; expires=Tue, 12-Oct-1999 05:00:00 GMT; path=/; secure; HttpOnly; SameSite=Lax",
+        ".AuthCookie=1513B0E244FFAF241363ED1B01A08D540DFE2BA1ED161C867CBB3AD02BA35E60A50F8E57304ADDCA7C1FEC1A2481DC8910A1373EFF62E30F0361943563DA53E07AEC235BC0A422CDBB5839E70C71CD10BC70F923595E4A2727C7D33D9C95EA77; path=/; HttpOnly; SameSite=Lax"
+      ],
+      "allHeaders": {
+        "cache-control": "private",
+        "content-length": "129",
+        "content-security-policy-report-only": "default-src 'self';script-src 'unsafe-eval' 'strict-dynamic';style-src 'self' 'unsafe-inline' *.aptrinsic.com;img-src 'self' * data:;connect-src 'self' *.aptrinsic.com *.nr-data.net;report-uri /HomeAccess/WebResource.axd?cspReport=true",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Sun, 01 Mar 2026 16:09:23 GMT",
+        "location": "/HomeAccess/",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "set-cookie": ".AuthCookie=1513B0E244FFAF241363ED1B01A08D540DFE2BA1ED161C867CBB3AD02BA35E60A50F8E57304ADDCA7C1FEC1A2481DC8910A1373EFF62E30F0361943563DA53E07AEC235BC0A422CDBB5839E70C71CD10BC70F923595E4A2727C7D33D9C95EA77; path=/; HttpOnly; SameSite=Lax",
+        "strict-transport-security": "max-age=157680000",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-ua-compatible": "IE=Edge"
+      }
+    },
+    {
+      "step": 2,
+      "mergedCookies": "ASP.NET_SessionId=udb43egjqizgu4popenydqau; __RequestVerificationToken_L0hvbWVBY2Nlc3M1=7xpRHwOM2IFo1XaQ-Jfg_04zWG5AUTertTPxRY-Mn4NDA0C3WgBpHQxeoKDYj_srhm9LdOLIWDix6AcZMoaWkzCdRcn-CZ18EAkD3go-u5w1; .AuthCookie=1513B0E244FFAF241363ED1B01A08D540DFE2BA1ED161C867CBB3AD02BA35E60A50F8E57304ADDCA7C1FEC1A2481DC8910A1373EFF62E30F0361943563DA53E07AEC235BC0A422CDBB5839E70C71CD10BC70F923595E4A2727C7D33D9C95EA77"
+    },
+    {
+      "step": 3,
+      "action": "Following redirect to home",
+      "url": "https://hac.coppellisd.com/HomeAccess/"
+    },
+    {
+      "step": 3,
+      "status": 200,
+      "htmlLength": 20240,
+      "htmlPreview": "\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n    <head>\r\n        <meta charset=\"utf-8\" />\r\n\r\n        \r\n    \r\n    \r\n\r\n\r\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\r\n            <title>Schedule</title>\r\n        \r\n\r\n        <!-- 3rd party CSS our globals override -->\r\n<link  href=\"/HomeAccess/Stylesheets/Themes/Base/css?v=tw0njYZqSOVYHn_D3DhCDTytd6fBWpHQgVTAo5eiREQ1\" type=\"text/css\" rel=\"stylesheet\" />\r\n<link  href=\"/HomeAccess/Stylesheets/SunGard/sungard-font-awesome.css\" type=\"text/css\" rel=\""
+    },
+    {
+      "step": 4,
+      "action": "Fetching Classwork page",
+      "url": "https://hac.coppellisd.com/HomeAccess/Content/Student/Assignments.aspx"
+    },
+    {
+      "step": 4,
+      "status": 200,
+      "redirectLocation": null
+    },
+    {
+      "step": 4,
+      "success": true,
+      "analysis": {
+        "htmlLength": 119573,
+        "htmlPreview": "\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n<head><title>\r\n\tHomeAccess\r\n</title>\r\n    \r\n    <link href=\"/HomeAccess/Stylesheets/Themes/Base/css?v=tw0njYZqSOVYHn_D3DhCDTytd6fBWpHQgVTAo5eiREQ1\" rel=\"Stylesheet\" type=\"text/css\" /> \r\n\r\n    \r\n    <link rel=\"Stylesheet\" href=\"/HomeAccess/eSchoolPLUSResource/GetEmbeddedStyle?file=CrossSite\" />\r\n    <link rel=\"Stylesheet\" href=\"/HomeAccess/eSchoolPLUSResource/GetEmbeddedStyle?file=ComboBox\" />\r\n    <link rel=\"Stylesheet\" href=\"/HomeAccess/Stylesheets/Common/font-awesome.css\" />\r\n    \r\n    \r\n    <link rel=\"Stylesheet\" href=\"/HomeAccess/Stylesheets/Site.css\" />\r\n    <link rel=\"stylesheet\" href=\"/HomeAccess/Stylesheets/Frame/Frame.css\" /> \r\n    <link rel=\"SHORTCUT ICON\" href=\"/HomeAccess/Media/Themes/Base/Common/favicon.ico\"/>\r\n    <style>\r\n        .sg-asp-table-header-row,\r\n        .ui-jqgrid-view .ui-jqgrid-hdiv, \r\n        .ui-jqgrid tr.ui-jqgrid-labels th  {\r\n\t        background-color: #00427c;\r\n            color: #FFFFFF;\r\n        }\r\n    </style>\r\n\r\n    <sc",
+        "hasClassDropdown": true,
+        "classOptions": [
+          {
+            "value": "ALL",
+            "text": "(All Classes)"
+          },
+          {
+            "value": "550090|1",
+            "text": "1511A - 1    ENGLISH I HONORS A"
+          },
+          {
+            "value": "550091|1",
+            "text": "1511B - 1    ENGLISH I HONORS B"
+          },
+          {
+            "value": "550129|1",
+            "text": "2341A - 3    ALGEBRA II HONORS A"
+          },
+          {
+            "value": "550130|1",
+            "text": "2341B - 3    ALGEBRA II HONORS B"
+          },
+          {
+            "value": "550111|1",
+            "text": "3115A - 3    BIOLOGY HONORS A"
+          },
+          {
+            "value": "550112|1",
+            "text": "3115B - 3    BIOLOGY HONORS B"
+          },
+          {
+            "value": "539665|1",
+            "text": "4340A - 20   HUMAN GEOGRAPHY AP A"
+          },
+          {
+            "value": "539688|1",
+            "text": "4340B - 20   HUMAN GEOGRAPHY AP B"
+          },
+          {
+            "value": "536790|1",
+            "text": "5225A-09 - 1    JV RED 9TH TENNIS A"
+          },
+          {
+            "value": "536791|1",
+            "text": "5225B-09 - 1    JV RED 9TH TENNIS B"
+          },
+          {
+            "value": "539761|1",
+            "text": "6023A - 12   SPANISH II HONORS A"
+          },
+          {
+            "value": "539772|1",
+            "text": "6023B - 12   SPANISH II HONORS B"
+          },
+          {
+            "value": "540124|1",
+            "text": "7201A - 3    COMPUTER SCIENCE I A"
+          },
+          {
+            "value": "540125|1",
+            "text": "7201B - 3    COMPUTER SCIENCE I B"
+          }
+        ],
+        "classCount": 15,
+        "allSelectIds": [
+          "plnMain_ddlReportCardRuns",
+          "plnMain_ddlClasses",
+          "plnMain_ddlCompetencies",
+          "plnMain_ddlOrderBy"
+        ],
+        "hasGradeTable": true
+      }
+    }
+  ],
+  "summary": {
+    "loginPageFetched": false,
+    "loginSubmitted": false,
+    "homePageAccessed": false,
+    "classworkAccessible": false,
+    "interimReportAccessible": false
+  }
+}

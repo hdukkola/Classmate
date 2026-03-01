@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "motion/react";
-import { Mail, Lock, Eye, EyeOff, Sparkles } from "lucide-react";
+import { User, Lock, Eye, EyeOff, Sparkles } from "lucide-react";
 import logo from "figma:asset/e8d95d2d8b336ca3bd69c9a1a1cf7b84851bce61.png";
+import { loginToHAC } from "../../services/hacApi";
 
 interface LoginProps {
   onLoginSuccess: (accessToken: string, user: any) => void;
@@ -9,11 +10,47 @@ interface LoginProps {
 }
 
 export function Login({ onLoginSuccess, onSwitchToSignup }: LoginProps) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [debugInfo, setDebugInfo] = useState("");
+  
+  // Hardcoded to Coppell ISD - users don't need to enter district URL
+  const districtUrl = "https://hac.coppellisd.com";
+
+  const handleDebug = async () => {
+    if (!username || !password) {
+      setError("Please enter username and password first");
+      return;
+    }
+
+    setError("");
+    setLoading(true);
+    setDebugInfo("Testing HAC API directly...");
+
+    try {
+      // Test the HAC API directly without going through our backend
+      const testUrl = `https://homeaccesscenterapi.vercel.app/api/name?link=${encodeURIComponent(districtUrl)}&user=${encodeURIComponent(username)}&pass=${encodeURIComponent(password)}`;
+      
+      console.log("🧪 Testing HAC API directly:", testUrl.replace(/pass=[^&]+/, 'pass=***'));
+      
+      const response = await fetch(testUrl);
+      const data = await response.text();
+      
+      console.log("🧪 Direct API Response Status:", response.status);
+      console.log("🧪 Direct API Response:", data);
+      
+      setDebugInfo(`Status: ${response.status}\n\nResponse:\n${data}`);
+      
+    } catch (err: any) {
+      console.error("🧪 Direct API Error:", err);
+      setDebugInfo(`Error: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,28 +58,28 @@ export function Login({ onLoginSuccess, onSwitchToSignup }: LoginProps) {
     setLoading(true);
 
     try {
-      const { supabase } = await import("../../../lib/supabase");
+      const result = await loginToHAC({ districtUrl, username, password });
       
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
-
-      if (data.session) {
+      if (result.success) {
         // Store session in localStorage
-        localStorage.setItem("classmate_access_token", data.session.access_token);
-        localStorage.setItem("classmate_user", JSON.stringify(data.user));
+        localStorage.setItem("classmate_access_token", result.sessionToken || "");
+        localStorage.setItem("classmate_user", JSON.stringify({
+          id: result.studentId,
+          name: result.studentName,
+        }));
         
-        onLoginSuccess(data.session.access_token, data.user);
+        // IMPORTANT: Don't set loading to false here - let the App component handle it
+        // The login success will trigger a re-render and the user will see the app
+        onLoginSuccess(result.sessionToken || "", {
+          id: result.studentId,
+          name: result.studentName,
+        });
+      } else {
+        setError(result.error || "Failed to connect to HAC");
+        setLoading(false);
       }
     } catch (err: any) {
-      console.error("Login error:", err);
+      console.error("HAC Login error:", err);
       setError(err.message || "An error occurred during login");
       setLoading(false);
     }
@@ -215,20 +252,10 @@ export function Login({ onLoginSuccess, onSwitchToSignup }: LoginProps) {
               Welcome Back
             </h2>
           </div>
-          <p
-            style={{
-              fontFamily: "'Inter', sans-serif",
-              fontSize: "15px",
-              color: "rgba(255, 255, 255, 0.8)",
-              margin: 0,
-            }}
-          >
-            Sign in to continue your academic journey
-          </p>
         </div>
 
         <form onSubmit={handleLogin}>
-          {/* Email Input */}
+          {/* Username Input */}
           <div style={{ marginBottom: "20px" }}>
             <label
               style={{
@@ -240,7 +267,7 @@ export function Login({ onLoginSuccess, onSwitchToSignup }: LoginProps) {
                 display: "block",
               }}
             >
-              Email Address
+              Username
             </label>
             <div
               style={{
@@ -249,7 +276,7 @@ export function Login({ onLoginSuccess, onSwitchToSignup }: LoginProps) {
                 alignItems: "center",
               }}
             >
-              <Mail
+              <User
                 size={20}
                 style={{
                   position: "absolute",
@@ -260,10 +287,10 @@ export function Login({ onLoginSuccess, onSwitchToSignup }: LoginProps) {
               />
               <motion.input
                 whileFocus={{ scale: 1.01 }}
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="student@school.edu"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Your HAC username"
                 required
                 style={{
                   width: "100%",

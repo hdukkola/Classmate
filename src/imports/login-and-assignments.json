@@ -1,0 +1,97 @@
+{
+  "success": true,
+  "steps": [
+    {
+      "step": 1,
+      "action": "Fetching login page",
+      "url": "https://hac.coppellisd.com/HomeAccess/Account/LogOn"
+    },
+    {
+      "step": 1,
+      "status": 200,
+      "cookiesReceived": 4,
+      "cookies": [
+        "ASP.NET_SessionId=23a12quk3wgygm2t55jmhaww; path=/; secure; HttpOnly; SameSite=Lax",
+        ".AuthCookie=; expires=Tue, 12-Oct-1999 05:00:00 GMT; path=/; secure; HttpOnly; SameSite=Lax",
+        "SPIHACSiteCode=; path=/; HttpOnly",
+        "__RequestVerificationToken_L0hvbWVBY2Nlc3M1=7miyRJD2rIBpo-67qaBpF0jTsW-b4i1b3RaAGL__FrSccl42GpqnxiTb1o7Cin6Er6jD5ICHxZDFtC3prnPDuSnnNgLkCgqPhHNmMRFPhgw1; path=/; HttpOnly"
+      ],
+      "htmlLength": 11675,
+      "htmlPreview": "\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n    <head>\r\n        <meta charset=\"utf-8\" />\r\n\r\n        \r\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\r\n            <title>Login</title>\r\n        \r\n\r\n        <!-- 3rd party CSS our globals override -->\r\n<link  href=\"/HomeAccess/Stylesheets/bootstrap/cs"
+    },
+    {
+      "step": 1,
+      "token": "Y9CHhmg4VgadCmcuHneuoVslb_FV4Q..."
+    },
+    {
+      "step": 1,
+      "databaseValue": "10"
+    },
+    {
+      "step": 2,
+      "action": "Submitting login credentials"
+    },
+    {
+      "step": 2,
+      "status": 302,
+      "redirectLocation": "/HomeAccess/",
+      "cookiesReceived": 2,
+      "cookies": [
+        ".AuthCookie=; expires=Tue, 12-Oct-1999 05:00:00 GMT; path=/; secure; HttpOnly; SameSite=Lax",
+        ".AuthCookie=5CB981F271278CA021DB92E4BE7E09C439A443C0A46C4E8E56978E719AF6F8B61A011FE08E0EDFFF37D3429F0F197FECD7105F99C32FF071500220689589E8562A3537063B5EA627DCEC0BA900D0A67CF0D6F59B82B0CA3833A9558C212D3555; path=/; HttpOnly; SameSite=Lax"
+      ],
+      "allHeaders": {
+        "cache-control": "private",
+        "content-length": "129",
+        "content-security-policy-report-only": "default-src 'self';script-src 'unsafe-eval' 'strict-dynamic';style-src 'self' 'unsafe-inline' *.aptrinsic.com;img-src 'self' * data:;connect-src 'self' *.aptrinsic.com *.nr-data.net;report-uri /HomeAccess/WebResource.axd?cspReport=true",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Sun, 01 Mar 2026 16:06:09 GMT",
+        "location": "/HomeAccess/",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "set-cookie": ".AuthCookie=5CB981F271278CA021DB92E4BE7E09C439A443C0A46C4E8E56978E719AF6F8B61A011FE08E0EDFFF37D3429F0F197FECD7105F99C32FF071500220689589E8562A3537063B5EA627DCEC0BA900D0A67CF0D6F59B82B0CA3833A9558C212D3555; path=/; HttpOnly; SameSite=Lax",
+        "strict-transport-security": "max-age=157680000",
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "SAMEORIGIN",
+        "x-ua-compatible": "IE=Edge"
+      }
+    },
+    {
+      "step": 2,
+      "mergedCookies": "ASP.NET_SessionId=23a12quk3wgygm2t55jmhaww; __RequestVerificationToken_L0hvbWVBY2Nlc3M1=7miyRJD2rIBpo-67qaBpF0jTsW-b4i1b3RaAGL__FrSccl42GpqnxiTb1o7Cin6Er6jD5ICHxZDFtC3prnPDuSnnNgLkCgqPhHNmMRFPhgw1; .AuthCookie=5CB981F271278CA021DB92E4BE7E09C439A443C0A46C4E8E56978E719AF6F8B61A011FE08E0EDFFF37D3429F0F197FECD7105F99C32FF071500220689589E8562A3537063B5EA627DCEC0BA900D0A67CF0D6F59B82B0CA3833A9558C212D3555"
+    },
+    {
+      "step": 3,
+      "action": "Following redirect to home",
+      "url": "https://hac.coppellisd.com/HomeAccess/"
+    },
+    {
+      "step": 3,
+      "status": 200,
+      "htmlLength": 20240,
+      "htmlPreview": "\r\n<!DOCTYPE html>\r\n\r\n<html>\r\n    <head>\r\n        <meta charset=\"utf-8\" />\r\n\r\n        \r\n    \r\n    \r\n\r\n\r\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\r\n            <title>Schedule</title>\r\n        \r\n\r\n        <!-- 3rd party CSS our globals override -->\r\n<link  href=\"/HomeAccess/Stylesheets/Themes/Base/css?v=tw0njYZqSOVYHn_D3DhCDTytd6fBWpHQgVTAo5eiREQ1\" type=\"text/css\" rel=\"stylesheet\" />\r\n<link  href=\"/HomeAccess/Stylesheets/SunGard/sungard-font-awesome.css\" type=\"text/css\" rel=\""
+    },
+    {
+      "step": 4,
+      "action": "Fetching Classwork page",
+      "url": "https://hac.coppellisd.com/HomeAccess/Content/Student/Assignments.aspx"
+    },
+    {
+      "step": 4,
+      "status": 200,
+      "redirectLocation": null
+    },
+    {
+      "step": 4,
+      "success": true,
+      "htmlLength": 119573,
+      "htmlPreview": "\r\n\r\n<!DOCTYPE html>\r\n<html>\r\n<head><title>\r\n\tHomeAccess\r\n</title>\r\n    \r\n    <link href=\"/HomeAccess/Stylesheets/Themes/Base/css?v=tw0njYZqSOVYHn_D3DhCDTytd6fBWpHQgVTAo5eiREQ1\" rel=\"Stylesheet\" type=\"text/css\" /> \r\n\r\n    \r\n    <link rel=\"Stylesheet\" href=\"/HomeAccess/eSchoolPLUSResource/GetEmbeddedStyle?file=CrossSite\" />\r\n    <link rel=\"Stylesheet\" href=\"/HomeAccess/eSchoolPLUSResource/GetEmbeddedStyle?file=ComboBox\" />\r\n    <link rel=\"Stylesheet\" href=\"/HomeAccess/Stylesheets/Common/font-aweso"
+    }
+  ],
+  "summary": {
+    "loginPageFetched": false,
+    "loginSubmitted": false,
+    "homePageAccessed": false,
+    "classworkAccessible": false,
+    "interimReportAccessible": false
+  }
+}

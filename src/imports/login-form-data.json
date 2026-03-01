@@ -1,0 +1,81 @@
+{
+  "success": true,
+  "loginUrl": "https://hac.coppellisd.com/HomeAccess/Account/LogOn",
+  "formAction": "/HomeAccess/Account/LogOn",
+  "inputs": [
+    {
+      "type": "hidden",
+      "name": "__RequestVerificationToken",
+      "value": "hUqm35Xk7ZZPDKRg2Jt9A1OEdDCVvFN8UC2wwFUAL5MsugZ6gKr2r3BE-NegoDcGIoNZo3V9GJAKyiKr2J1AX68tojhVbaTP8KaUcaBYCCI1",
+      "id": null,
+      "html": "<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"hUqm35Xk7ZZPDKRg2Jt9A1OEdDCVvFN8UC2wwFUAL5MsugZ6gKr2r3BE-NegoDcGIoNZo3V9GJAKyiKr2J1AX68tojhVbaTP8KaUcaBYCCI1\" />"
+    },
+    {
+      "type": "hidden",
+      "name": "SCKTY00328510CustomEnabled",
+      "value": "False",
+      "id": "SCKTY00328510CustomEnabled",
+      "html": "<input data-val=\"true\" data-val-required=\"The SCKTY00328510CustomEnabled field is required.\" id=\"SCKTY00328510CustomEnabled\" name=\"SCKTY00328510CustomEnabled\" type=\"hidden\" value=\"False\" />"
+    },
+    {
+      "type": "hidden",
+      "name": "SCKTY00436568CustomEnabled",
+      "value": "False",
+      "id": "SCKTY00436568CustomEnabled",
+      "html": "<input data-val=\"true\" data-val-required=\"The SCKTY00436568CustomEnabled field is required.\" id=\"SCKTY00436568CustomEnabled\" name=\"SCKTY00436568CustomEnabled\" type=\"hidden\" value=\"False\" />"
+    },
+    {
+      "type": "hidden",
+      "name": "Database",
+      "value": "10",
+      "id": "Database",
+      "html": "<input data-val=\"true\" data-val-number=\"The field Select a District must be a number.\" data-val-required=\"The Select a District field is required.\" id=\"Database\" name=\"Database\" type=\"hidden\" value=\"10\" />"
+    },
+    {
+      "type": "hidden",
+      "name": "VerificationOption",
+      "value": "UsernamePassword",
+      "id": "VerificationOption",
+      "html": "<input data-val=\"true\" data-val-required=\"The VerificationOption field is required.\" id=\"VerificationOption\" name=\"VerificationOption\" type=\"hidden\" value=\"UsernamePassword\" />"
+    },
+    {
+      "type": "text",
+      "name": "LogOnDetails.UserName",
+      "value": "",
+      "id": "true",
+      "html": "<input autocomplete=\"off\" class=\"logon-option form-control sg-track-changes\" data-sgvalid-isvalid=\"true\" data-val=\"true\" data-val-required=\"The User Name field is required.\" data-val-sgvalid=\"Server Validation Error\" id=\"LogOnDetails_UserName\" name=\"LogOnDetails.UserName\" type=\"text\" value=\"\" />"
+    },
+    {
+      "type": "text",
+      "name": "tempUN",
+      "value": "",
+      "id": "true",
+      "html": "<input class=\"hidden form-control sg-track-changes\" data-sgvalid-isvalid=\"true\" data-val=\"true\" data-val-sgvalid=\"Server Validation Error\" id=\"tempUN\" name=\"tempUN\" type=\"text\" value=\"\" />"
+    },
+    {
+      "type": "password",
+      "name": "tempPW",
+      "value": "",
+      "id": "true",
+      "html": "<input class=\"hidden form-control sg-track-changes\" data-sgvalid-isvalid=\"true\" data-val=\"true\" data-val-sgvalid=\"Server Validation Error\" id=\"tempPW\" name=\"tempPW\" type=\"password\" />"
+    },
+    {
+      "type": "password",
+      "name": "LogOnDetails.Password",
+      "value": "",
+      "id": "true",
+      "html": "<input autocomplete=\"off\" class=\"logon-option form-control sg-track-changes\" data-sgvalid-isvalid=\"true\" data-val=\"true\" data-val-required=\"The Password field is required.\" data-val-sgvalid=\"Server Validation Error\" id=\"LogOnDetails_Password\" name=\"LogOnDetails.Password\" type=\"password\" />"
+    }
+  ],
+  "selects": [],
+  "analysis": {
+    "totalInputs": 9,
+    "namedInputs": 9,
+    "hiddenInputs": 5,
+    "selectFields": 0,
+    "hasUsernameField": true,
+    "hasPasswordField": true,
+    "hasDatabaseField": false
+  },
+  "recommendation": "Use the exact field names shown in 'inputs' and 'selects' for login"
+}

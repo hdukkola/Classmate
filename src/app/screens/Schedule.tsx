@@ -1,17 +1,38 @@
-import { useState } from "react";
-import { schedule } from "../data/mockData";
+import { useState, useEffect } from "react";
 import { Clock, MapPin } from "lucide-react";
+import { fetchGrades } from "../services/hacApi";
 
 export function Schedule() {
-  const [view, setView] = useState<"today" | "week">("today");
+  const [classes, setClasses] = useState<any[]>([]);
 
-  const todaySchedule = schedule;
+  useEffect(() => {
+    loadGrades();
+  }, []);
+
+  const loadGrades = async () => {
+    try {
+      const grades = await fetchGrades();
+      if (grades && grades.classes) {
+        const periods = ["8:00 AM - 8:50 AM", "8:55 AM - 9:45 AM", "9:50 AM - 10:40 AM", "10:45 AM - 11:35 AM", "11:40 AM - 12:30 PM", "12:35 PM - 1:25 PM", "1:30 PM - 2:20 PM", "2:25 PM - 3:15 PM"];
+        const classesWithTime = grades.classes.map((cls: any, index: number) => ({
+          ...cls,
+          time: periods[index] || "TBD",
+          room: cls.room || "N/A"
+        }));
+        setClasses(classesWithTime);
+      }
+    } catch (error) {
+      console.error("Error loading schedule:", error);
+    }
+  };
+
+  const todaySchedule = classes;
   const weekSchedule = {
-    Monday: schedule,
-    Tuesday: schedule,
-    Wednesday: schedule,
-    Thursday: schedule,
-    Friday: schedule,
+    Monday: classes,
+    Tuesday: classes,
+    Wednesday: classes,
+    Thursday: classes,
+    Friday: classes,
   };
 
   return (

@@ -1,10 +1,46 @@
 import { motion } from "motion/react";
-import { calculateGPA, getClassesByQuarter, periodDataHistory } from "../data/mockData";
 import { getGradeBadge, getBadgeTextColor, getGradeGlow } from "../utils/gradeBadges";
 import { TrendingUp, TrendingDown, Award, Target, BookOpen } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { fetchGrades } from "../services/hacApi";
 
 export function GPA() {
+  const [classes, setClasses] = useState<any[]>([]);
+
+  useEffect(() => {
+    loadGrades();
+  }, []);
+
+  const loadGrades = async () => {
+    try {
+      const grades = await fetchGrades();
+      if (grades && grades.classes) {
+        setClasses(grades.classes);
+      }
+    } catch (error) {
+      console.error("Error loading grades:", error);
+    }
+  };
+
+  const calculateGPA = (classList: any[]) => {
+    if (classList.length === 0) return 0;
+    const total = classList.reduce((sum, cls) => sum + cls.grade, 0);
+    const average = total / classList.length;
+    return average / 25; // Convert to 4.0 scale
+  };
+
+  const getClassesByQuarter = (quarter: string) => {
+    // For now, return all classes for any quarter
+    return classes;
+  };
+
+  const periodDataHistory = [
+    { period: "Q1", gpa: 3.8, grade: 95 },
+    { period: "Q2", gpa: 3.9, grade: 97 },
+    { period: "Q3", gpa: 3.85, grade: 96 },
+    { period: "Current", gpa: calculateGPA(classes), grade: Math.round(classes.reduce((sum, c) => sum + c.grade, 0) / (classes.length || 1)) },
+  ];
+
   const [selectedPeriod, setSelectedPeriod] = useState("current");
   const [gpaType, setGpaType] = useState<"unweighted" | "weighted">("unweighted");
   
@@ -53,7 +89,7 @@ export function GPA() {
     "D/F (0-69)": displayClasses.filter(c => c.grade < 70).length,
   };
 
-  const currentData = periodDataHistory[selectedPeriod as keyof typeof periodDataHistory];
+  const currentData = periodDataHistory.find(p => p.period === selectedPeriod) || { gpa: 0, grade: 0 };
 
   return (
     <div className="min-h-screen pb-24" style={{ backgroundColor: "var(--color-bg-primary)", overflow: "visible" }}>
@@ -297,7 +333,7 @@ export function GPA() {
             color: "var(--color-text-primary)",
             marginBottom: "4px"
           }}>
-            {currentData.weighted}
+            {currentData.gpa}
           </p>
           <p style={{
             fontFamily: "'Inter', sans-serif",
@@ -328,7 +364,7 @@ export function GPA() {
             color: "var(--color-text-primary)",
             marginBottom: "4px"
           }}>
-            {currentData.credits}
+            {totalCredits}
           </p>
           <p style={{
             fontFamily: "'Inter', sans-serif",
@@ -560,91 +596,93 @@ export function GPA() {
           GPA Impact Analysis
         </h2>
 
-        <div className="space-y-4">
-          {/* Highest Impact */}
-          <div 
-            className="p-4 rounded-[16px]"
-            style={{ 
-              backgroundColor: "rgba(34, 197, 94, 0.1)",
-              border: "1px solid rgba(34, 197, 94, 0.3)"
-            }}
-          >
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
-                <TrendingUp className="w-4 h-4 text-green-500" />
-              </div>
-              <div className="flex-1">
-                <p style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  color: "#22C55E",
-                  marginBottom: "4px"
-                }}>
-                  Highest Positive Impact
-                </p>
-                <p style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  color: "var(--color-text-primary)",
-                  marginBottom: "2px"
-                }}>
-                  {sortedClasses[0].name}
-                </p>
-                <p style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "13px",
-                  color: "var(--color-text-secondary)"
-                }}>
-                  {sortedClasses[0].grade}% • Contributing +{gradeToGPA(sortedClasses[0].grade).toFixed(2)} points
-                </p>
+        {sortedClasses.length > 0 && (
+          <div className="space-y-4">
+            {/* Highest Impact */}
+            <div 
+              className="p-4 rounded-[16px]"
+              style={{ 
+                backgroundColor: "rgba(34, 197, 94, 0.1)",
+                border: "1px solid rgba(34, 197, 94, 0.3)"
+              }}
+            >
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center mt-0.5">
+                  <TrendingUp className="w-4 h-4 text-green-500" />
+                </div>
+                <div className="flex-1">
+                  <p style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    color: "#22C55E",
+                    marginBottom: "4px"
+                  }}>
+                    Highest Positive Impact
+                  </p>
+                  <p style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    color: "var(--color-text-primary)",
+                    marginBottom: "2px"
+                  }}>
+                    {sortedClasses[0]?.name || "No class"}
+                  </p>
+                  <p style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "13px",
+                    color: "var(--color-text-secondary)"
+                  }}>
+                    {sortedClasses[0]?.grade || 0}% • Contributing +{gradeToGPA(sortedClasses[0]?.grade || 0).toFixed(2)} points
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Lowest Impact */}
-          <div 
-            className="p-4 rounded-[16px]"
-            style={{ 
-              backgroundColor: "rgba(239, 68, 68, 0.1)",
-              border: "1px solid rgba(239, 68, 68, 0.3)"
-            }}
-          >
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center mt-0.5">
-                <TrendingDown className="w-4 h-4 text-red-500" />
-              </div>
-              <div className="flex-1">
-                <p style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  color: "#EF4444",
-                  marginBottom: "4px"
-                }}>
-                  Needs Improvement
-                </p>
-                <p style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "15px",
-                  fontWeight: 700,
-                  color: "var(--color-text-primary)",
-                  marginBottom: "2px"
-                }}>
-                  {sortedClasses[sortedClasses.length - 1].name}
-                </p>
-                <p style={{
-                  fontFamily: "'Inter', sans-serif",
-                  fontSize: "13px",
-                  color: "var(--color-text-secondary)"
-                }}>
-                  {sortedClasses[sortedClasses.length - 1].grade}% • Potential to raise GPA by {((4.0 - gradeToGPA(sortedClasses[sortedClasses.length - 1].grade)) * 0.125).toFixed(2)} points
-                </p>
+            {/* Lowest Impact */}
+            <div 
+              className="p-4 rounded-[16px]"
+              style={{ 
+                backgroundColor: "rgba(239, 68, 68, 0.1)",
+                border: "1px solid rgba(239, 68, 68, 0.3)"
+              }}
+            >
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center mt-0.5">
+                  <TrendingDown className="w-4 h-4 text-red-500" />
+                </div>
+                <div className="flex-1">
+                  <p style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "14px",
+                    fontWeight: 600,
+                    color: "#EF4444",
+                    marginBottom: "4px"
+                  }}>
+                    Needs Improvement
+                  </p>
+                  <p style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "15px",
+                    fontWeight: 700,
+                    color: "var(--color-text-primary)",
+                    marginBottom: "2px"
+                  }}>
+                    {sortedClasses[sortedClasses.length - 1]?.name || "No class"}
+                  </p>
+                  <p style={{
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: "13px",
+                    color: "var(--color-text-secondary)"
+                  }}>
+                    {sortedClasses[sortedClasses.length - 1]?.grade || 0}% • Potential to raise GPA by {((4.0 - gradeToGPA(sortedClasses[sortedClasses.length - 1]?.grade || 0)) * 0.125).toFixed(2)} points
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </motion.div>
     </div>
   );

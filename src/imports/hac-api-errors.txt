@@ -1,0 +1,84 @@
+code_components_prev…cbf8c8.min.js.br:28 
+ POST https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/assignments 401 (Unauthorized)
+
+uguimrowimdlrzvocgwa…a/hac/assignments:1 
+ Failed to load resource: the server responded with a status of 401 ()
+uguimrowimdlrzvocgwa…a/hac/assignments:1 
+ Failed to load resource: the server responded with a status of 401 ()
+code_components_prev…cbf8c8.min.js.br:28 Error fetching upcoming assignments: Error: Failed to fetch upcoming assignments
+    at fetchUpcomingAssignments (hacApi.ts?t=1772367090105:245:13)
+    at async Promise.all (95e5189c-39ba-494e-9….figma.site/index 1)
+    at async loadHACData (Home.tsx?t=1772367090105:40:56)
+code_components_prev…cbf8c8.min.js.br:28 
+ POST https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/assignments 401 (Unauthorized)
+uguimrowimdlrzvocgwa…a/hac/assignments:1 
+ Failed to load resource: the server responded with a status of 401 ()
+uguimrowimdlrzvocgwa…a/hac/assignments:1 
+ Failed to load resource: the server responded with a status of 401 ()
+code_components_prev…cbf8c8.min.js.br:28 Error fetching recent grades: Error: Failed to fetch recent grades
+    at fetchRecentGrades (hacApi.ts?t=1772367090105:265:13)
+    at async Promise.all (95e5189c-39ba-494e-9….figma.site/index 2)
+    at async loadHACData (Home.tsx?t=1772367090105:40:56)
+code_components_prev…cbf8c8.min.js.br:28 
+ POST https://uguimrowimdlrzvocgwa.supabase.co/functions/v1/make-server-9a43014a/hac/grades 401 (Unauthorized)
+uguimrowimdlrzvocgwa…43014a/hac/grades:1 
+ Failed to load resource: the server responded with a status of 401 ()
+uguimrowimdlrzvocgwa…43014a/hac/grades:1 
+ Failed to load resource: the server responded with a status of 401 ()
+code_components_prev…cbf8c8.min.js.br:28 Error fetching grades: Error: Failed to fetch grades
+    at fetchGrades (hacApi.ts?t=1772367090105:225:13)
+    at async Promise.all (95e5189c-39ba-494e-9….figma.site/index 0)
+    at async loadHACData (Home.tsx?t=1772367090105:40:56)
+code_components_prev…cbf8c8.min.js.br:28 Error fetching recent grades: TypeError: Failed to fetch
+    at code_components_prev…8.min.js.br:28:9794
+    at fetchRecentGrades (hacApi.ts?t=1772367090105:259:28)
+    at loadHACData (Home.tsx?t=1772367090105:44:13)
+    at Home.tsx?t=1772367090105:56:5
+    at TN (code_components_prev…min.js.br:89:138396)
+    at T7 (code_components_prev…min.js.br:89:151856)
+    at T8 (code_components_prev…min.js.br:89:151634)
+    at T6 (code_components_prev…min.js.br:89:151542)
+    at T5 (code_components_prev…min.js.br:89:151420)
+    at S1 (code_components_prev…min.js.br:89:163585)
+    at SQ (code_components_prev…min.js.br:89:163247)
+    at code_components_prev…min.js.br:89:162379
+    at code_components_prev…c8.min.js.br:3:4482
+    at V (code_components_prev….min.js.br:113:1842)
+    at B (code_components_prev….min.js.br:113:1559)
+    at MessagePort.eo (code_components_prev….min.js.br:113:3433)
+code_components_prev…cbf8c8.min.js.br:28 Error fetching grades: TypeError: Failed to fetch
+    at code_components_prev…8.min.js.br:28:9794
+    at fetchGrades (hacApi.ts?t=1772367090105:220:28)
+    at loadHACData (Home.tsx?t=1772367090105:42:13)
+    at Home.tsx?t=1772367090105:56:5
+    at TN (code_components_prev…min.js.br:89:138396)
+    at T7 (code_components_prev…min.js.br:89:151856)
+    at T8 (code_components_prev…min.js.br:89:151634)
+    at T6 (code_components_prev…min.js.br:89:151542)
+    at T5 (code_components_prev…min.js.br:89:151420)
+    at S1 (code_components_prev…min.js.br:89:163585)
+    at SQ (code_components_prev…min.js.br:89:163247)
+    at code_components_prev…min.js.br:89:162379
+    at code_components_prev…c8.min.js.br:3:4482
+    at V (code_components_prev….min.js.br:113:1842)
+    at B (code_components_prev….min.js.br:113:1559)
+    at MessagePort.eo (code_components_prev….min.js.br:113:3433)
+code_components_prev…cbf8c8.min.js.br:28 Error fetching upcoming assignments: TypeError: Failed to fetch
+    at code_components_prev…8.min.js.br:28:9794
+    at fetchUpcomingAssignments (hacApi.ts?t=1772367090105:239:28)
+    at loadHACData (Home.tsx?t=1772367090105:43:13)
+    at Home.tsx?t=1772367090105:56:5
+    at TN (code_components_prev…min.js.br:89:138396)
+    at T7 (code_components_prev…min.js.br:89:151856)
+    at T8 (code_components_prev…min.js.br:89:151634)
+    at T6 (code_components_prev…min.js.br:89:151542)
+    at T5 (code_components_prev…min.js.br:89:151420)
+    at S1 (code_components_prev…min.js.br:89:163585)
+    at SQ (code_components_prev…min.js.br:89:163247)
+    at code_components_prev…min.js.br:89:162379
+    at code_components_prev…c8.min.js.br:3:4482
+    at V (code_components_prev….min.js.br:113:1842)
+    at B (code_components_prev….min.js.br:113:1559)
+    at MessagePort.eo (code_components_prev….min.js.br:113:3433)
+﻿
+

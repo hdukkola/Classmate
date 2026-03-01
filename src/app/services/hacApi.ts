@@ -2,139 +2,16 @@
  * HAC (Home Access Center) API Service
  * This handles all communication with PowerSchool HAC
  * 
- * 🎯 QUICK START GUIDE:
+ * 🎯 REAL HAC DATA ONLY - NO MOCK DATA!
  * 
- * RIGHT NOW: App uses mock data (fake grades for testing)
- * 
- * TO CONNECT REAL API:
- * 1. Deploy your Python server to Render.com (see /example_python_api.py)
- * 2. Change API_BASE_URL below to your deployed URL
- * 3. Change USE_MOCK_DATA to false
- * 4. Done! Your app will fetch real grades
- * 
- * Read /README_START_HERE.md for complete beginner tutorial!
+ * This service connects to our backend server which scrapes HAC directly
+ * to fetch real grades from the Interim Progress Report.
  */
 
+import { projectId, publicAnonKey } from '/utils/supabase/info';
+
 // ⚙️ CONFIGURATION
-// STEP 1: Change this to your Python API URL when ready
-// Example: "https://my-hac-api.onrender.com/api"
-const API_BASE_URL = "https://your-python-api-url.com/api";
-
-// STEP 2: Set this to false when you have a real API
-const USE_MOCK_DATA = true; // Set to false when you have a real API
-
-// ========================================
-// MOCK DATA (for testing without a server)
-// ========================================
-
-const MOCK_CLASSES = [
-  {
-    id: "1",
-    name: "AP Calculus BC",
-    teacher: "Mrs. Johnson",
-    grade: 97,
-    credits: 1.0,
-    room: "Math 205",
-    period: "1"
-  },
-  {
-    id: "2",
-    name: "AP Physics C",
-    teacher: "Mr. Rodriguez",
-    grade: 94,
-    credits: 1.0,
-    room: "Science 304",
-    period: "2"
-  },
-  {
-    id: "3",
-    name: "English Literature",
-    teacher: "Ms. Thompson",
-    grade: 88,
-    credits: 1.0,
-    room: "English 102",
-    period: "3"
-  },
-  {
-    id: "4",
-    name: "AP US History",
-    teacher: "Mr. Chen",
-    grade: 92,
-    credits: 1.0,
-    room: "History 201",
-    period: "4"
-  },
-  {
-    id: "5",
-    name: "Spanish IV",
-    teacher: "Señora Martinez",
-    grade: 90,
-    credits: 1.0,
-    room: "Lang 105",
-    period: "5"
-  },
-  {
-    id: "6",
-    name: "AP Computer Science",
-    teacher: "Dr. Williams",
-    grade: 96,
-    credits: 1.0,
-    room: "Tech 401",
-    period: "6"
-  }
-];
-
-const MOCK_UPCOMING = [
-  {
-    className: "AP Calculus BC",
-    assignment: "Final Exam",
-    dueDate: "Dec 15",
-    weight: "30%",
-    category: "Tests"
-  },
-  {
-    className: "English Literature",
-    assignment: "Final Essay",
-    dueDate: "Dec 18",
-    weight: "25%",
-    category: "Essays"
-  },
-  {
-    className: "AP Physics C",
-    assignment: "Lab Final Report",
-    dueDate: "Dec 20",
-    weight: "20%",
-    category: "Labs"
-  },
-  {
-    className: "AP US History",
-    assignment: "DBQ Final",
-    dueDate: "Dec 16",
-    weight: "35%",
-    category: "Essays"
-  }
-];
-
-const MOCK_RECENT = [
-  {
-    className: "AP Calculus BC",
-    assignment: "Midterm Exam",
-    grade: "92%",
-    date: "Dec 1"
-  },
-  {
-    className: "English Literature",
-    assignment: "Shakespeare Essay",
-    grade: "88%",
-    date: "Nov 28"
-  },
-  {
-    className: "AP Physics C",
-    assignment: "Lab Report #3",
-    grade: "94%",
-    date: "Nov 25"
-  }
-];
+const API_BASE_URL = `https://${projectId}.supabase.co/functions/v1/make-server-9a43014a`;
 
 // ========================================
 // AUTHENTICATION
@@ -156,58 +33,80 @@ interface LoginResponse {
 
 /**
  * Log in to PowerSchool HAC
- * Stores session token in localStorage for future requests
+ * Calls our backend server which scrapes HAC directly
  */
 export async function loginToHAC(credentials: LoginCredentials): Promise<LoginResponse> {
-  if (USE_MOCK_DATA) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Mock successful login
-    const mockToken = "mock_token_" + Date.now();
-    localStorage.setItem("hac_session_token", mockToken);
-    localStorage.setItem("hac_student_id", "12345");
-    localStorage.setItem("hac_student_name", "Alex Johnson");
-    localStorage.setItem("hac_logged_in", "true");
-    
-    return {
-      success: true,
-      sessionToken: mockToken,
-      studentId: "12345",
-      studentName: "Alex Johnson"
-    };
-  }
-  
-  // Real API call (when USE_MOCK_DATA = false)
+  // Real API call through backend server - NO MOCK DATA!
   try {
-    const response = await fetch(`${API_BASE_URL}/login`, {
+    console.log("🔐 Attempting HAC login...");
+    console.log("📍 API URL:", `${API_BASE_URL}/hac/login`);
+    console.log("👤 Username:", credentials.username);
+    console.log("🌐 District:", credentials.districtUrl);
+    
+    const response = await fetch(`${API_BASE_URL}/hac/login`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${publicAnonKey}`
       },
       body: JSON.stringify(credentials)
     });
     
-    if (!response.ok) {
-      throw new Error("Login failed");
+    console.log("📡 Response status:", response.status);
+    console.log("📡 Response headers:", Object.fromEntries(response.headers.entries()));
+    
+    const responseText = await response.text();
+    console.log("📡 Raw response:", responseText);
+    
+    let data;
+    try {
+      data = JSON.parse(responseText);
+    } catch (parseError) {
+      console.error("❌ Failed to parse response as JSON:", parseError);
+      throw new Error(`Server returned invalid response: ${responseText.substring(0, 100)}`);
     }
     
-    const data = await response.json();
+    console.log("📦 Parsed data:", data);
+    
+    if (!response.ok) {
+      const errorMessage = data.error || `Server error (${response.status})`;
+      console.error("❌ Login failed:", errorMessage);
+      throw new Error(errorMessage);
+    }
+    
+    if (!data.success) {
+      const errorMessage = data.error || "Login failed - no success flag";
+      console.error("❌ Login unsuccessful:", errorMessage);
+      throw new Error(errorMessage);
+    }
+    
+    console.log("✅ Login successful!");
+    console.log("👤 Student:", data.studentName);
+    console.log("🎫 Session token:", data.sessionToken?.substring(0, 20) + "...");
     
     // Store session info
     localStorage.setItem("hac_session_token", data.sessionToken);
-    localStorage.setItem("hac_student_id", data.studentId);
     localStorage.setItem("hac_student_name", data.studentName);
+    localStorage.setItem("hac_student_id", data.studentId);
     localStorage.setItem("hac_logged_in", "true");
     
     return {
       success: true,
-      ...data
+      sessionToken: data.sessionToken,
+      studentId: data.studentId,
+      studentName: data.studentName
     };
   } catch (error) {
+    console.error("❌ HAC Login error:", error);
+    console.error("❌ Error details:", {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined
+    });
+    
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Unknown error"
+      error: error instanceof Error ? error.message : "Unknown error occurred"
     };
   }
 }
@@ -248,140 +147,145 @@ export function getStudentInfo() {
  */
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem("hac_session_token");
-  return {
+  console.log("🔑 getAuthHeaders called:");
+  console.log("   Token from localStorage:", token ? `${token.substring(0, 30)}...` : "NOT FOUND");
+  
+  const headers = {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${token}`
+    "Authorization": `Bearer ${publicAnonKey}`, // Dummy header to satisfy Supabase edge function security
+    "X-HAC-Session-Token": token || "" // Our actual session token
   };
+  
+  console.log("   Headers being sent:", headers);
+  return headers;
 }
 
 /**
- * Fetch all classes and grades
+ * Fetch all classes and grades - HAC DATA ONLY!
  */
 export async function fetchGrades() {
-  if (USE_MOCK_DATA) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return { classes: MOCK_CLASSES };
+  // NO MOCK DATA - Must be logged in to HAC!
+  if (!isLoggedIn()) {
+    console.warn("⚠️ User not logged in to HAC - returning empty data");
+    return { classes: [] };
   }
   
-  // Real API call
+  // Real API call to HAC scraper
   try {
-    const response = await fetch(`${API_BASE_URL}/grades`, {
+    console.log("📊 Fetching grades from HAC...");
+    console.log("   Auth headers:", getAuthHeaders());
+    
+    const response = await fetch(`${API_BASE_URL}/hac/grades`, {
+      method: "POST",
       headers: getAuthHeaders()
     });
     
+    console.log("   Response status:", response.status);
+    
     if (!response.ok) {
-      throw new Error("Failed to fetch grades");
+      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+      console.error("❌ Grades API error:", errorData);
+      throw new Error(`Failed to fetch grades: ${errorData.error || response.statusText}`);
     }
     
-    return await response.json();
+    const data = await response.json();
+    console.log("✅ Grades received:", data);
+    return data;
   } catch (error) {
     console.error("Error fetching grades:", error);
-    // Fallback to mock data on error
-    return { classes: MOCK_CLASSES };
+    return { classes: [] };
   }
 }
 
 /**
- * Fetch upcoming assignments
+ * Fetch upcoming assignments - HAC DATA ONLY!
  */
 export async function fetchUpcomingAssignments() {
-  if (USE_MOCK_DATA) {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return { upcoming: MOCK_UPCOMING };
+  // NO MOCK DATA - Must be logged in to HAC!
+  if (!isLoggedIn()) {
+    console.warn("⚠️ User not logged in to HAC - returning empty data");
+    return { upcoming: [] };
   }
   
   try {
-    const response = await fetch(`${API_BASE_URL}/assignments/upcoming`, {
-      headers: getAuthHeaders()
+    console.log("📝 Fetching upcoming assignments from HAC...");
+    console.log("   Auth headers:", getAuthHeaders());
+    
+    const response = await fetch(`${API_BASE_URL}/hac/assignments`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ type: "upcoming" })
     });
     
+    console.log("   Response status:", response.status);
+    
     if (!response.ok) {
-      throw new Error("Failed to fetch upcoming assignments");
+      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+      console.error("❌ Assignments API error:", errorData);
+      throw new Error(`Failed to fetch upcoming assignments: ${errorData.error || response.statusText}`);
     }
     
-    return await response.json();
+    const data = await response.json();
+    console.log("✅ Upcoming assignments received:", data);
+    return data;
   } catch (error) {
     console.error("Error fetching upcoming assignments:", error);
-    return { upcoming: MOCK_UPCOMING };
+    return { upcoming: [] };
   }
 }
 
 /**
- * Fetch recent grades
+ * Fetch recent grades - HAC DATA ONLY!
  */
 export async function fetchRecentGrades() {
-  if (USE_MOCK_DATA) {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    return { recent: MOCK_RECENT };
+  // NO MOCK DATA - Must be logged in to HAC!
+  if (!isLoggedIn()) {
+    console.warn("⚠️ User not logged in to HAC - returning empty data");
+    return { recent: [] };
   }
   
   try {
-    const response = await fetch(`${API_BASE_URL}/assignments/recent`, {
-      headers: getAuthHeaders()
+    console.log("📈 Fetching recent grades from HAC...");
+    console.log("   Auth headers:", getAuthHeaders());
+    
+    const response = await fetch(`${API_BASE_URL}/hac/assignments`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ type: "recent" })
     });
     
+    console.log("   Response status:", response.status);
+    
     if (!response.ok) {
-      throw new Error("Failed to fetch recent grades");
+      const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+      console.error("❌ Recent grades API error:", errorData);
+      throw new Error(`Failed to fetch recent grades: ${errorData.error || response.statusText}`);
     }
     
-    return await response.json();
+    const data = await response.json();
+    console.log("✅ Recent grades received:", data);
+    return data;
   } catch (error) {
     console.error("Error fetching recent grades:", error);
-    return { recent: MOCK_RECENT };
+    return { recent: [] };
   }
 }
 
 /**
- * Fetch assignments for a specific class
+ * Fetch assignments for a specific class - HAC DATA ONLY!
  */
 export async function fetchClassAssignments(classId: string) {
-  if (USE_MOCK_DATA) {
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Mock assignments for a class
-    return {
-      assignments: [
-        {
-          id: "a1",
-          name: "Midterm Exam",
-          score: 92,
-          maxScore: 100,
-          percentage: 92,
-          weight: 30,
-          dueDate: "2024-12-01",
-          category: "Tests",
-          graded: true
-        },
-        {
-          id: "a2",
-          name: "Homework Set 5",
-          score: 95,
-          maxScore: 100,
-          percentage: 95,
-          weight: 10,
-          dueDate: "2024-11-28",
-          category: "Homework",
-          graded: true
-        },
-        {
-          id: "a3",
-          name: "Quiz 8",
-          score: 88,
-          maxScore: 100,
-          percentage: 88,
-          weight: 15,
-          dueDate: "2024-11-25",
-          category: "Quizzes",
-          graded: true
-        }
-      ]
-    };
+  // NO MOCK DATA - Must be logged in to HAC!
+  if (!isLoggedIn()) {
+    console.warn("⚠️ User not logged in to HAC - returning empty data");
+    return { assignments: [] };
   }
   
   try {
-    const response = await fetch(`${API_BASE_URL}/classes/${classId}/assignments`, {
-      headers: getAuthHeaders()
+    const response = await fetch(`${API_BASE_URL}/hac/assignments`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ classId })
     });
     
     if (!response.ok) {
