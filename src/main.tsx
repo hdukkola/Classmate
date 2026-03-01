@@ -1,7 +1,19 @@
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './app/App';
+import './styles/index.css';
+import './styles/fonts.css';
+import './styles/tailwind.css';
+import './styles/theme.css';
 
-  import { createRoot } from "react-dom/client";
-  import App from "./app/App.tsx";
-  import "./styles/index.css";
+// Initialize Capacitor and log platform info
+import { logPlatformInfo } from './app/utils/capacitor';
 
-  createRoot(document.getElementById("root")!).render(<App />);
-  
+// Log platform info for debugging
+logPlatformInfo();
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
