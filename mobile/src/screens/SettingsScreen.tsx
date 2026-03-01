@@ -31,8 +31,8 @@ export function SettingsScreen() {
       {
         text: "Logout",
         style: "destructive",
-        onPress: () => {
-          logout();
+        onPress: async () => {
+          await logout();
         },
       },
     ]);
