@@ -1,0 +1,45 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* Mobile-only viewport container */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #E5E7EB;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background: #0a0909;
+  }
+}
+
+body {
+  overscroll-behavior-y: none;
+  margin: 0 auto;
+  max-width: 428px; /* iPhone 14 Pro Max width */
+}
+
+/* iOS-style smooth scrolling */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom scrollbar for iOS feel */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area support for iOS */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Mobile container shadow on desktop */
+@media (min-width: 429px) {
+  body {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+    min-height: 100vh;
+  }
+}

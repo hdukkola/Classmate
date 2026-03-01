@@ -1,0 +1,111 @@
+{
+  "page": "Grades",
+  "layout": {
+    "navbar": {
+      "height": 70,
+      "bg": "bg/primary",
+      "title": {
+        "text": "Grades",
+        "font": "Playfair Display",
+        "weight": 600,
+        "size": 32,
+        "color": "text/primary"
+      },
+      "sticky": true
+    },
+    "mp_tab_switch": {
+      "type": "segmented_control",
+      "options": ["MP1", "MP2", "MP3", "MP4", "Semester"],
+      "selected_style": {"bg": "primary/default", "text": "text/primary"},
+      "unselected_style": {"bg": "bg/elevated", "text": "text/secondary"},
+      "sticky": false
+    },
+    "classes_list": {
+      "type": "vertical_scroll",
+      "scrollable": true,
+      "card_style": {
+        "bg": "bg/secondary",
+        "rounded_corners": true,
+        "shadow": "bg-overlay",
+        "padding": 16,
+        "gap_between_cards": 16
+      },
+      "cards": [
+        {
+          "class_name": "Math",
+          "teacher": "Ms. Smith",
+          "grade": "92%",
+          "clickable": true,
+          "link_to": "Math_Details_Page"
+        },
+        {
+          "class_name": "English",
+          "teacher": "Mr. Johnson",
+          "grade": "88%",
+          "clickable": true,
+          "link_to": "English_Details_Page"
+        },
+        {
+          "class_name": "Science",
+          "teacher": "Dr. Lee",
+          "grade": "95%",
+          "clickable": true,
+          "link_to": "Science_Details_Page"
+        }
+      ]
+    },
+    "quick_actions": {
+      "position": "inline_bottom",
+      "buttons": [
+        {"text": "Add Class", "bg": "primary/default", "text_color": "text/primary"}
+      ],
+      "button_height": 45,
+      "full_width": true
+    },
+    "theme_system": {
+      "mode": "dark_or_light",
+      "accent_color": "user_selectable",
+      "app_adjusts_colors_based_on_accent": true
+    }
+  },
+  "spacing": {
+    "page_padding": 16,
+    "card_gap": 16
+  },
+  "tokens_used": [
+    "bg/primary", "bg/secondary", "bg/elevated",
+    "bg-overlay", "text/primary", "text/secondary", "text/muted",
+    "primary/default", "accent/default", "highlight/default", "highlight/secondary",
+    "border/default", "shadow/light", "shadow/medium"
+  ]
+}
+📝 AI / Figma Description
+
+Design a Grades Page for ClassMate with the following specifications:
+
+Navbar: Sticky, height 70px, dark/light mode based on accent color system. Title “Grades” using Playfair Display.
+MP Tab Switch: Horizontal segmented tabs under the navbar for MP1 | MP2 | MP3 | MP4 | Semester. Selected tab uses primary/default; unselected uses bg/elevated. Sticky: no.
+Classes List: Scrollable vertical list of class cards. Each card shows:
+
+Class name
+
+Teacher name
+
+Grade (only visible on class detail page, not here)
+Cards are rounded, shadowed, and fully clickable → navigate to specialized class page. No expanding cards.
+Grade Circle (Class Detail Page): Big circle with fill color based on grade:
+
+Purple: 97+
+
+Blue: 93–97
+
+Green: 88–93
+
+Yellow: 80–88
+
+Red: ≤80
+White large text inside circle shows the grade.
+Quick Actions: Sticky at bottom of scroll, single “Add Class” button. Full width, rounded.
+Theme / Colors: Dark or light mode. Accent color system: user picks accent, app adjusts theme (backgrounds, text, buttons) to match accent.
+Spacing & Layout: Page padding 16px, gap between cards 16px, scrollable main content.
+Tokens / Colors: All backgrounds, text, shadows, borders, highlights use expanded token system.

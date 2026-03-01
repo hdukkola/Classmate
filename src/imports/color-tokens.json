@@ -1,0 +1,82 @@
+{
+  "color": {
+    "bg": {
+      "primary": {
+        "dark": { "value": "#201d1d" },
+        "light": { "value": "#f7f5fa" }
+      },
+      "secondary": {
+        "dark": { "value": "#2b2727" },
+        "light": { "value": "#ece8f3" }
+      },
+      "elevated": {
+        "dark": { "value": "#332f2f" },
+        "light": { "value": "#ffffff" }
+      }
+    },
+    "text": {
+      "primary": {
+        "dark": { "value": "#f5f3f7" },
+        "light": { "value": "#201d1d" }
+      },
+      "secondary": {
+        "dark": { "value": "#cfcbd6" },
+        "light": { "value": "#4a4458" }
+      },
+      "muted": {
+        "dark": { "value": "#9e98a8" },
+        "light": { "value": "#7a7487" }
+      },
+      "onAccent": {
+        "dark": { "value": "#ffffff" },
+        "light": { "value": "#ffffff" }
+      },
+      "onWarm": {
+        "dark": { "value": "#2b2727" },
+        "light": { "value": "#2b2727" }
+      }
+    },
+    "primary": {
+      "default": {
+        "dark": { "value": "#6b3894" },
+        "light": { "value": "#6b3894" }
+      },
+      "hover": {
+        "dark": { "value": "#7a44a8" },
+        "light": { "value": "#7a44a8" }
+      },
+      "active": {
+        "dark": { "value": "#5c2f80" },
+        "light": { "value": "#5c2f80" }
+      },
+      "soft": {
+        "dark": { "value": "#6b389426" },
+        "light": { "value": "#6b38941a" }
+      }
+    },
+    "accent": {
+      "default": {
+        "dark": { "value": "#945cc1" },
+        "light": { "value": "#945cc1" }
+      },
+      "soft": {
+        "dark": { "value": "#945cc124" },
+        "light": { "value": "#945cc118" }
+      }
+    },
+    "highlight": {
+      "default": {
+        "dark": { "value": "#d8b46a" },
+        "light": { "value": "#d8b46a" }
+      },
+      "light": {
+        "dark": { "value": "#dcbb78" },
+        "light": { "value": "#dcbb78" }
+      },
+      "soft": {
+        "dark": { "value": "#d8b46a2e" },
+        "light": { "value": "#d8b46a26" }
+      }
+    }
+  }
+}

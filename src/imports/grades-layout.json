@@ -1,0 +1,89 @@
+{
+  "page": "Grades",
+  "layout": {
+    "header": {
+      "height": 70,
+      "bg": "bg/elevated",
+      "title": {
+        "text": "Grades",
+        "font": "Playfair Display",
+        "weight": 600,
+        "size": 32,
+        "color": "text/primary"
+      },
+      "hamburger_icon": true
+    },
+    "period_selector": {
+      "type": "segmented_control",
+      "options": ["MP1", "MP2", "MP3", "MP4", "Semester"],
+      "selected_style": {"bg": "primary/default", "text": "text/primary"},
+      "unselected_style": {"bg": "bg/elevated", "text": "text/secondary"}
+    },
+    "classes_list": {
+      "type": "vertical_scroll",
+      "card_style": {
+        "bg": "bg/secondary",
+        "rounded_corners": true,
+        "shadow": "bg-overlay",
+        "padding": 16,
+        "gap_between_cards": 16
+      },
+      "cards": [
+        {
+          "class_name": "Math",
+          "average_grade": "92%",
+          "assignments": [
+            {"name": "Quiz 1", "score": "95%", "weight": "1.0"},
+            {"name": "Homework", "score": "10/10", "weight": "0.5"}
+          ]
+        },
+        {
+          "class_name": "English",
+          "average_grade": "88%",
+          "assignments": [
+            {"name": "Essay 1", "score": "88%", "weight": "1.0"},
+            {"name": "Homework", "score": "10/10", "weight": "0.5"}
+          ]
+        },
+        {
+          "class_name": "Science",
+          "average_grade": "95%",
+          "assignments": [
+            {"name": "Lab 1", "score": "100%", "weight": "1.0"},
+            {"name": "Homework", "score": "9/10", "weight": "0.5"}
+          ]
+        }
+      ]
+    },
+    "gpa_summary_widget": {
+      "position": "top_right",
+      "bg": "bg/secondary",
+      "rounded_corners": true,
+      "content": {
+        "label": "GPA",
+        "value": "3.85",
+        "chart_type": "mini_pie",
+        "dynamic": true
+      }
+    },
+    "quick_actions": {
+      "buttons": [
+        {"text": "Add Assignment", "bg": "primary/default", "text_color": "text/primary"},
+        {"text": "Export Grades", "bg": "accent/default", "text_color": "text/primary"}
+      ],
+      "button_height": 45,
+      "full_width": true,
+      "gap": 16
+    }
+  },
+  "spacing": {
+    "page_padding": 16,
+    "card_gap": 16,
+    "assignment_row_height": 50
+  },
+  "tokens_used": [
+    "bg/primary", "bg/secondary", "bg/elevated",
+    "text/primary", "text/secondary", "text/muted",
+    "primary/default", "accent/default", "highlight/default"
+  ]
+}

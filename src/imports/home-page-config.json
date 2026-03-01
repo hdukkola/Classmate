@@ -1,0 +1,90 @@
+{
+  "page": "Home",
+  "layout": {
+    "header": {
+      "height": 70,
+      "bg": "bg/elevated",
+      "title": {
+        "text": "Home",
+        "font": "Playfair Display",
+        "weight": 600,
+        "size": 32,
+        "color": "text/primary"
+      },
+      "subtitle": {
+        "text": "Hi, [Name]!",
+        "font": "Inter",
+        "weight": 400,
+        "size": 16,
+        "color": "text/secondary"
+      },
+      "avatar": "circle placeholder 40px"
+    },
+    "gpa_section": {
+      "type": "pie_chart",
+      "tabs": ["Unweighted", "Weighted"],
+      "tab_style": {
+        "selected": {"bg": "primary/default", "text": "text/primary"},
+        "unselected": {"bg": "bg/elevated", "text": "text/secondary"}
+      },
+      "chart_size": 220,
+      "chart_colors": {
+        "A": "primary/default",
+        "B": "accent/default",
+        "C_Below": "highlight/default"
+      },
+      "center_text": {
+        "value": "3.85",
+        "font": "Playfair Display",
+        "weight": 700,
+        "size": 48,
+        "color": "text/primary"
+      },
+      "label": {
+        "text": "Unweighted GPA",
+        "font": "Inter Medium",
+        "size": 16,
+        "color": "text/secondary"
+      }
+    },
+    "cards_row": {
+      "type": "horizontal_scroll",
+      "card_size": {"width": 140, "height": 150},
+      "bg": "bg/secondary",
+      "cards": [
+        {"title": "Classes Taken", "value": "10", "text_color": "text/primary"},
+        {"title": "Credits Earned", "value": "20", "text_color": "text/primary"},
+        {"title": "Top Subject", "value": "Math – 95%", "text_color": "text/primary"}
+      ]
+    },
+    "recent_grades_list": {
+      "rows": [
+        {"class": "Math", "assignment": "Quiz 1", "grade": "95%", "weight": "1.0"},
+        {"class": "English", "assignment": "Homework", "grade": "88%", "weight": "1.0"},
+        {"class": "Science", "assignment": "Lab", "grade": "92%", "weight": "1.0"}
+      ],
+      "row_height": 50,
+      "alternating_bg": ["bg-secondary", "bg/elevated"],
+      "text_font": "Inter Regular",
+      "text_size": 14,
+      "text_color": "text/primary"
+    },
+    "quick_actions": {
+      "buttons": [
+        {"text": "Add Assignment", "font": "Inter Medium", "color": "text/primary", "bg": "primary/default"},
+        {"text": "View Full GPA", "font": "Inter Medium", "color": "text/primary", "bg": "accent/default"}
+      ],
+      "spacing": 16
+    }
+  },
+  "spacing": {
+    "section_gap": 24,
+    "card_gap": 16,
+    "page_padding": 16
+  },
+  "tokens_used": [
+    "bg/primary", "bg/secondary", "bg/elevated",
+    "text/primary", "text/secondary",
+    "primary/default", "accent/default", "highlight/default"
+  ]
+}

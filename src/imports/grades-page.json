@@ -1,0 +1,128 @@
+📄 Grades Page – Dark, Scrollable, Simplified
+{
+  "page": "Grades",
+  "layout": {
+    "header": {
+      "height": 70,
+      "bg": "bg/primary",
+      "title": {
+        "text": "Grades",
+        "font": "Playfair Display",
+        "weight": 600,
+        "size": 32,
+        "color": "text/primary"
+      },
+      "hamburger_icon": true
+    },
+    "period_selector": {
+      "type": "segmented_control",
+      "options": ["MP1", "MP2", "MP3", "MP4", "Semester"],
+      "selected_style": {"bg": "primary/default", "text": "text/primary"},
+      "unselected_style": {"bg": "bg/elevated", "text": "text/secondary"}
+    },
+    "gpa_summary_widget": {
+      "position": "top",
+      "bg": "bg/secondary",
+      "rounded_corners": true,
+      "content": {
+        "label": "GPA",
+        "value": "3.85",
+        "chart_type": "mini_pie",
+        "dynamic": true
+      },
+      "clickable": true,
+      "link_to": "GPA_Page"
+    },
+    "top_subject_card": {
+      "title": "Top Subject",
+      "value": "Math – 95%",
+      "bg": "bg/secondary",
+      "rounded_corners": true,
+      "clickable": true,
+      "link_to": "Class_Details"
+    },
+    "classes_list": {
+      "type": "vertical_scroll",
+      "card_style": {
+        "bg": "bg/secondary",
+        "rounded_corners": true,
+        "shadow": "bg-overlay",
+        "padding": 16,
+        "gap_between_cards": 16
+      },
+      "cards": [
+        {
+          "class_name": "Math",
+          "average_grade": "92%",
+          "assignments": [
+            {"name": "Quiz 1", "score": "95%", "weight": "1.0", "clickable": true, "link_to": "Assignment_Details"},
+            {"name": "Homework", "score": "10/10", "weight": "0.5", "clickable": true, "link_to": "Assignment_Details"}
+          ]
+        },
+        {
+          "class_name": "English",
+          "average_grade": "88%",
+          "assignments": [
+            {"name": "Essay 1", "score": "88%", "weight": "1.0", "clickable": true, "link_to": "Assignment_Details"},
+            {"name": "Homework", "score": "10/10", "weight": "0.5", "clickable": true, "link_to": "Assignment_Details"}
+          ]
+        },
+        {
+          "class_name": "Science",
+          "average_grade": "95%",
+          "assignments": [
+            {"name": "Lab 1", "score": "100%", "weight": "1.0", "clickable": true, "link_to": "Assignment_Details"},
+            {"name": "Homework", "score": "9/10", "weight": "0.5", "clickable": true, "link_to": "Assignment_Details"}
+          ]
+        }
+      ]
+    },
+    "quick_actions": {
+      "position": "inline_bottom",
+      "buttons": [
+        {"text": "Add Assignment", "bg": "primary/default", "text_color": "text/primary"},
+        {"text": "Export Grades", "bg": "accent/default", "text_color": "text/primary"}
+      ],
+      "button_height": 45,
+      "full_width": true,
+      "gap": 16
+    }
+  },
+  "spacing": {
+    "page_padding": 16,
+    "card_gap": 16,
+    "assignment_row_height": 50
+  },
+  "tokens_used": [
+    "bg/primary", "bg/secondary", "bg/elevated",
+    "bg-overlay", "text/primary", "text/secondary", "text/muted",
+    "primary/default", "accent/default", "highlight/default", "highlight/secondary",
+    "border/default", "shadow/light", "shadow/medium"
+  ]
+}
+📝 AI / Figma Description – Dark & Scrollable Grades Page
+
+Design a Grades Page for ClassMate, optimized for dark mode and mobile scrolling:
+
+Header: Title “Grades” with hamburger icon, background bg/primary. Height 70px.
+Period Selector: Horizontal segmented tabs: MP1 | MP2 | MP3 | MP4 | Semester. Selected tab uses primary/default; unselected uses bg/elevated.
+GPA Summary Widget: Top horizontal card, mini pie chart of GPA. Clickable → navigates to GPA page. Updates dynamically for selected period.
+Top Subject Card: Shows “Top Subject” with best grade. Clickable → navigates to class detail page. Background: bg/secondary.
+Classes List: Scrollable vertical list of class cards. Each card shows class name, average grade, and expandable assignments list. Each assignment row has name, score, weight, and is clickable to navigate to assignment details. Alternate row backgrounds (bg-secondary / bg-elevated). Rounded corners + soft shadow.
+Quick Actions: Inline bottom buttons (not sticky) for “Add Assignment” and “Export Grades”. Full width, height 45px, rounded corners. Backgrounds use token colors.
+Spacing & Layout: Page padding 16px, gap between cards 16px, assignment row height 50px. Scrollable main content, sticky buttons removed.
+Tokens / Colors: Dark mode, expanded token set for backgrounds, shadows, borders, text, accents, and highlights. Clickable widgets navigate to respective pages.
+
+This version fixes:
+
+Scrollable main content so classes + assignments can scroll naturally
+
+Sticky buttons removed → now inline at bottom of scroll, better mobile UX
+
+Simplified dashboard → only GPA + top subject, remove classes taken / credits
+
+Clickable widgets → all main cards / assignments can navigate to detail pages
+
+Fully dark theme → primary background more black, elevated sections darker
+
+Expanded tokens → shadows, borders, highlights for modern look
