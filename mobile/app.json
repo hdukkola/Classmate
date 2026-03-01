@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "ClassMate",
+    "slug": "classmate-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0f1115"
+      }
+    },
+    "plugins": [
+      "react-native-reanimated/plugin"
+    ]
+  }
+}
