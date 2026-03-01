@@ -1,23 +1,74 @@
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { ChevronRight, User, Bell, Moon, Info, LogOut, Sparkles } from "lucide-react";
+import { ChevronRight, User, Bell, Palette, Info, LogOut, Sparkles, Clock, Check } from "lucide-react";
+
+type Theme = "light" | "dark-purple" | "ocean";
 
 export function Settings() {
-  const [notifications, setNotifications] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [notifications, setNotifications] = useState(() => {
+    return localStorage.getItem("notifications") !== "false";
+  });
+  
+  const [theme, setTheme] = useState<Theme>(() => {
+    return (localStorage.getItem("theme") as Theme) || "dark-purple";
+  });
+  
+  const [showThemePicker, setShowThemePicker] = useState(false);
+  
   const [aiGradeAccess, setAiGradeAccess] = useState(() => {
     return localStorage.getItem("aiGradeAccess") === "true";
   });
+  
+  const [use24HourTime, setUse24HourTime] = useState(() => {
+    return localStorage.getItem("use24HourTime") === "true";
+  });
+
+  // Apply theme on mount and when theme changes
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  // Update localStorage when notifications change
+  useEffect(() => {
+    localStorage.setItem("notifications", notifications.toString());
+  }, [notifications]);
 
   // Update localStorage when aiGradeAccess changes
   useEffect(() => {
     localStorage.setItem("aiGradeAccess", aiGradeAccess.toString());
   }, [aiGradeAccess]);
 
+  // Update localStorage when time format changes
+  useEffect(() => {
+    localStorage.setItem("use24HourTime", use24HourTime.toString());
+  }, [use24HourTime]);
+
   const profileData = {
     name: "Alex Johnson",
     gradeLevel: "12th Grade",
   };
+
+  const themes = [
+    {
+      id: "light" as Theme,
+      name: "Light",
+      description: "Classic light mode",
+      colors: ["#6b3894", "#945cc1", "#f7f5fa"],
+    },
+    {
+      id: "dark-purple" as Theme,
+      name: "Dark Purple",
+      description: "Premium purple theme",
+      colors: ["#6b3894", "#945cc1", "#0d0c0e"],
+    },
+    {
+      id: "ocean" as Theme,
+      name: "Ocean",
+      description: "Deep blue theme",
+      colors: ["#2563eb", "#0ea5e9", "#0a1628"],
+    },
+  ];
 
   return (
     <div className="min-h-screen px-5 py-6 pb-24" style={{ backgroundColor: "var(--color-bg-primary)" }}>
@@ -44,7 +95,7 @@ export function Settings() {
           Profile
         </p>
         <div className="rounded-[24px] overflow-hidden"
-          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", borderTop: "1px solid var(--color-text-muted)" }}
+          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", border: "1px solid var(--color-border)" }}
         >
           <button className="w-full flex items-center justify-between p-5 active:opacity-70 transition-opacity">
             <div className="flex items-center gap-4">
@@ -61,6 +112,108 @@ export function Settings() {
         </div>
       </motion.div>
 
+      {/* Appearance Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="mb-6"
+      >
+        <p className="text-sm font-bold mb-3 px-2 uppercase tracking-wide" style={{ color: "var(--color-text-muted)" }}>
+          Appearance
+        </p>
+        <div className="rounded-[24px] overflow-hidden"
+          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", border: "1px solid var(--color-border)" }}
+        >
+          {/* Theme Selector */}
+          <button 
+            onClick={() => setShowThemePicker(!showThemePicker)}
+            className="w-full flex items-center justify-between p-5 active:opacity-70 transition-opacity"
+            style={{ borderBottom: showThemePicker ? "1px solid var(--color-border)" : "none" }}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: "var(--color-primary-soft)" }}>
+                <Palette className="w-5 h-5" style={{ color: "var(--color-primary)" }} />
+              </div>
+              <div className="text-left">
+                <p className="font-bold" style={{ color: "var(--color-text-primary)" }}>Theme</p>
+                <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  {themes.find(t => t.id === theme)?.name}
+                </p>
+              </div>
+            </div>
+            <ChevronRight 
+              className="w-5 h-5 transition-transform" 
+              style={{ 
+                color: "var(--color-text-muted)",
+                transform: showThemePicker ? "rotate(90deg)" : "rotate(0deg)"
+              }} 
+            />
+          </button>
+
+          {/* Theme Options */}
+          {showThemePicker && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              {themes.map((themeOption, index) => (
+                <motion.button
+                  key={themeOption.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.05 }}
+                  onClick={() => {
+                    setTheme(themeOption.id);
+                    setShowThemePicker(false);
+                  }}
+                  className="w-full flex items-center justify-between p-5 pl-16 active:opacity-70 transition-all hover:bg-opacity-50"
+                  style={{ 
+                    borderBottom: index < themes.length - 1 ? "1px solid var(--color-border)" : "none",
+                    backgroundColor: theme === themeOption.id ? "var(--color-primary-soft)" : "transparent"
+                  }}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="flex gap-1.5">
+                      {themeOption.colors.map((color, i) => (
+                        <div
+                          key={i}
+                          className="w-6 h-6 rounded-full border-2"
+                          style={{ 
+                            backgroundColor: color,
+                            borderColor: "var(--color-bg-elevated)"
+                          }}
+                        />
+                      ))}
+                    </div>
+                    <div className="text-left">
+                      <p className="font-bold text-sm" style={{ color: "var(--color-text-primary)" }}>
+                        {themeOption.name}
+                      </p>
+                      <p className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+                        {themeOption.description}
+                      </p>
+                    </div>
+                  </div>
+                  {theme === themeOption.id && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="w-6 h-6 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: "var(--color-primary)" }}
+                    >
+                      <Check className="w-4 h-4 text-white" />
+                    </motion.div>
+                  )}
+                </motion.button>
+              ))}
+            </motion.div>
+          )}
+        </div>
+      </motion.div>
+
       {/* Preferences Section */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -72,10 +225,10 @@ export function Settings() {
           Preferences
         </p>
         <div className="rounded-[24px] overflow-hidden"
-          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)" }}
+          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", border: "1px solid var(--color-border)" }}
         >
           {/* Notifications Toggle */}
-          <div className="flex items-center justify-between p-5" style={{ borderBottom: "1px solid var(--color-text-muted)" }}>
+          <div className="flex items-center justify-between p-5" style={{ borderBottom: "1px solid var(--color-border)" }}>
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-[#F59E0B]/10 flex items-center justify-center">
                 <Bell className="w-5 h-5 text-[#F59E0B]" />
@@ -102,27 +255,30 @@ export function Settings() {
             </label>
           </div>
 
-          {/* Dark Mode Toggle */}
-          <div className="flex items-center justify-between p-5">
+          {/* 24-Hour Time Toggle */}
+          <div className="flex items-center justify-between p-5" style={{ borderBottom: "1px solid var(--color-border)" }}>
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: "var(--color-primary-soft)" }}>
-                <Moon className="w-5 h-5" style={{ color: "var(--color-primary)" }} />
+              <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 flex items-center justify-center">
+                <Clock className="w-5 h-5 text-[#10B981]" />
               </div>
               <div>
-                <p className="font-bold" style={{ color: "var(--color-text-primary)" }}>Dark Mode</p>
-                <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>Auto-detected</p>
+                <p className="font-bold" style={{ color: "var(--color-text-primary)" }}>24-Hour Time</p>
+                <p className="text-sm" style={{ color: "var(--color-text-secondary)" }}>{use24HourTime ? "16:00" : "4:00 PM"}</p>
               </div>
             </div>
             <label className="relative inline-block w-12 h-7">
               <input
                 type="checkbox"
-                checked={darkMode}
-                onChange={(e) => setDarkMode(e.target.checked)}
+                checked={use24HourTime}
+                onChange={(e) => setUse24HourTime(e.target.checked)}
                 className="sr-only peer"
-                disabled
               />
-              <div className="w-12 h-7 rounded-full opacity-50 cursor-not-allowed" style={{ backgroundColor: "var(--color-text-muted)" }}>
-                <div className="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full" />
+              <div className="w-12 h-7 rounded-full peer transition-colors cursor-pointer" style={{ backgroundColor: use24HourTime ? "var(--color-primary)" : "var(--color-text-muted)" }}>
+                <div
+                  className={`absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full transition-transform ${
+                    use24HourTime ? "translate-x-5" : ""
+                  }`}
+                />
               </div>
             </label>
           </div>
@@ -168,9 +324,9 @@ export function Settings() {
           About
         </p>
         <div className="rounded-[24px] overflow-hidden"
-          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)" }}
+          style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", border: "1px solid var(--color-border)" }}
         >
-          <button className="w-full flex items-center justify-between p-5 active:opacity-70 transition-opacity" style={{ borderBottom: "1px solid var(--color-text-muted)" }}>
+          <button className="w-full flex items-center justify-between p-5 active:opacity-70 transition-opacity" style={{ borderBottom: "1px solid var(--color-border)" }}>
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 rounded-xl bg-[#3B82F6]/10 flex items-center justify-center">
                 <Info className="w-5 h-5 text-[#3B82F6]" />
@@ -198,7 +354,7 @@ export function Settings() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
         className="w-full rounded-[24px] p-5 active:scale-[0.98] transition-transform flex items-center justify-center gap-3"
-        style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)" }}
+        style={{ backgroundColor: "var(--color-bg-elevated)", boxShadow: "var(--shadow-md)", border: "1px solid var(--color-border)" }}
       >
         <LogOut className="w-5 h-5 text-[#EF4444]" />
         <span className="font-bold text-[#EF4444]">Logout</span>

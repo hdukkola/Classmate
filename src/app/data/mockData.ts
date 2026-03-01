@@ -8,6 +8,10 @@ export interface Class {
   room?: string;
   updatedDaysAgo: number;
   period: number;
+  q1Grade?: number;
+  q2Grade?: number;
+  q3Grade?: number;
+  q4Grade?: number;
 }
 
 export interface Assignment {
@@ -31,6 +35,40 @@ export interface ScheduleItem {
   color: string;
 }
 
+// Quarter/Period GPA Data
+export interface PeriodData {
+  id: string;
+  label: string;
+  gpa: number;
+  weighted: number;
+  credits: number;
+}
+
+// Weekly Performance Data
+export interface WeeklyPerformance {
+  week: string;
+  score: number;
+  gpa: number;
+}
+
+// Study Streak Data
+export interface StreakData {
+  current: number;
+  longest: number;
+  lastUpdated: string;
+}
+
+// Achievement Milestone
+export interface Achievement {
+  id: string;
+  title: string;
+  description: string;
+  current: number;
+  target: number;
+  color: string;
+  icon: string;
+}
+
 export const classes: Class[] = [
   {
     id: "1",
@@ -42,6 +80,10 @@ export const classes: Class[] = [
     room: "Math 205",
     updatedDaysAgo: 2,
     period: 1,
+    q1Grade: 94,
+    q2Grade: 96,
+    q3Grade: 98,
+    q4Grade: 97,
   },
   {
     id: "2",
@@ -53,6 +95,10 @@ export const classes: Class[] = [
     room: "English 101",
     updatedDaysAgo: 1,
     period: 2,
+    q1Grade: 85,
+    q2Grade: 87,
+    q3Grade: 91,
+    q4Grade: 89,
   },
   {
     id: "3",
@@ -64,6 +110,10 @@ export const classes: Class[] = [
     room: "Science 302",
     updatedDaysAgo: 3,
     period: 3,
+    q1Grade: 78,
+    q2Grade: 72,
+    q3Grade: 75,
+    q4Grade: 76,
   },
   {
     id: "4",
@@ -75,6 +125,10 @@ export const classes: Class[] = [
     room: "History 115",
     updatedDaysAgo: 1,
     period: 4,
+    q1Grade: 68,
+    q2Grade: 61,
+    q3Grade: 64,
+    q4Grade: 65,
   },
   {
     id: "5",
@@ -86,6 +140,10 @@ export const classes: Class[] = [
     room: "Tech 401",
     updatedDaysAgo: 2,
     period: 5,
+    q1Grade: 91,
+    q2Grade: 93,
+    q3Grade: 96,
+    q4Grade: 94,
   },
   {
     id: "6",
@@ -97,6 +155,10 @@ export const classes: Class[] = [
     room: "Lang 105",
     updatedDaysAgo: 1,
     period: 6,
+    q1Grade: 87,
+    q2Grade: 90,
+    q3Grade: 93,
+    q4Grade: 91,
   },
   {
     id: "7",
@@ -108,6 +170,10 @@ export const classes: Class[] = [
     room: "Science 210",
     updatedDaysAgo: 4,
     period: 7,
+    q1Grade: 84,
+    q2Grade: 86,
+    q3Grade: 90,
+    q4Grade: 88,
   },
   {
     id: "8",
@@ -119,6 +185,10 @@ export const classes: Class[] = [
     room: "Arts 304",
     updatedDaysAgo: 1,
     period: 8,
+    q1Grade: 93,
+    q2Grade: 95,
+    q3Grade: 98,
+    q4Grade: 96,
   },
 ];
 
@@ -255,4 +325,102 @@ export function getGradeStatus(grade: number): string {
   if (grade >= 80) return "Good";
   if (grade >= 70) return "Fair";
   return "Needs Improvement";
+}
+
+// Analytics Data
+export const weeklyPerformanceData: WeeklyPerformance[] = [
+  { week: "Week 1", score: 88, gpa: 3.76 },
+  { week: "Week 2", score: 85, gpa: 3.71 },
+  { week: "Week 3", score: 89, gpa: 3.79 },
+  { week: "Week 4", score: 92, gpa: 3.85 },
+  { week: "Week 5", score: 87, gpa: 3.74 },
+  { week: "Week 6", score: 91, gpa: 3.82 },
+];
+
+export const studyStreak: StreakData = {
+  current: 12,
+  longest: 18,
+  lastUpdated: "2026-03-01",
+};
+
+export const achievements: Achievement[] = [
+  {
+    id: "gpa-goal",
+    title: "4.0 GPA Goal",
+    description: "Achieve and maintain a perfect GPA",
+    current: 3.82,
+    target: 4.0,
+    color: "#6b3894",
+    icon: "target",
+  },
+  {
+    id: "honor-roll",
+    title: "Honor Roll",
+    description: "Maintain 90% average across all classes",
+    current: 87,
+    target: 90,
+    color: "#3B82F6",
+    icon: "award",
+  },
+  {
+    id: "attendance",
+    title: "Perfect Attendance",
+    description: "30 consecutive days without absence",
+    current: 28,
+    target: 30,
+    color: "#22C55E",
+    icon: "calendar",
+  },
+];
+
+// Period/Quarter Data with calculated GPAs
+export const periodDataHistory: Record<string, PeriodData> = {
+  current: {
+    id: "current",
+    label: "Current",
+    gpa: 3.82,
+    weighted: 4.13,
+    credits: 7.5,
+  },
+  q1: {
+    id: "q1",
+    label: "Q1",
+    gpa: 3.78,
+    weighted: 4.08,
+    credits: 7.5,
+  },
+  q2: {
+    id: "q2",
+    label: "Q2",
+    gpa: 3.75,
+    weighted: 4.05,
+    credits: 7.5,
+  },
+  q3: {
+    id: "q3",
+    label: "Q3",
+    gpa: 3.88,
+    weighted: 4.19,
+    credits: 7.5,
+  },
+  q4: {
+    id: "q4",
+    label: "Q4",
+    gpa: 3.80,
+    weighted: 4.10,
+    credits: 7.5,
+  },
+};
+
+// Helper function to get grades by quarter
+export function getClassesByQuarter(quarter: string): Class[] {
+  if (quarter === "current") return classes;
+  
+  return classes.map(cls => ({
+    ...cls,
+    grade: quarter === "q1" ? (cls.q1Grade || cls.grade) :
+           quarter === "q2" ? (cls.q2Grade || cls.grade) :
+           quarter === "q3" ? (cls.q3Grade || cls.grade) :
+           quarter === "q4" ? (cls.q4Grade || cls.grade) : cls.grade
+  }));
 }

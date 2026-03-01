@@ -46,10 +46,9 @@ export function ClassDetail() {
 
   return (
     <div 
-      className="min-h-screen mx-auto pb-24"
+      className="min-h-screen pb-24"
       style={{
-        backgroundColor: "var(--color-bg-primary)",
-        maxWidth: "428px"
+        backgroundColor: "var(--color-bg-primary)"
       }}
     >
       {/* Header with Back Button */}
@@ -71,8 +70,22 @@ export function ClassDetail() {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
-        className="flex justify-center mb-8"
+        className="flex flex-col items-center mb-8"
       >
+        {/* Current Grade Label */}
+        <span
+          style={{
+            fontFamily: "'Inter', sans-serif",
+            fontSize: "18px",
+            fontWeight: 600,
+            color: "var(--color-text-secondary)",
+            marginBottom: "16px"
+          }}
+        >
+          Current Grade
+        </span>
+        
+        {/* Grade Badge */}
         <div className="relative" style={{ width: "200px", height: "200px" }}>
           <img 
             src={getGradeBadge(classData.grade)}
@@ -80,7 +93,7 @@ export function ClassDetail() {
             className="w-full h-full"
             style={{ filter: `drop-shadow(0 10px 30px ${getGradeGlow(classData.grade)})` }}
           />
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center">
             <span
               style={{
                 fontFamily: "'Inter', sans-serif",
@@ -91,17 +104,6 @@ export function ClassDetail() {
               }}
             >
               {classData.grade}
-            </span>
-            <span
-              style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: "18px",
-                fontWeight: 600,
-                color: "rgba(255, 255, 255, 0.9)",
-                marginTop: "8px"
-              }}
-            >
-              Current Grade
             </span>
           </div>
         </div>

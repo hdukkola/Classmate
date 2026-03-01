@@ -1,17 +1,16 @@
 import { motion } from "motion/react";
 import { useNavigate } from "react-router";
-import { classes } from "../data/mockData";
+import { getClassesByQuarter } from "../data/mockData";
 import { getGradeBadge, getBadgeTextColor, getGradeGlow } from "../utils/gradeBadges";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-type MarkingPeriod = "MP1" | "MP2" | "MP3" | "MP4";
-
 export function GradesNew() {
   const navigate = useNavigate();
-  const [selectedPeriod, setSelectedPeriod] = useState<MarkingPeriod>("MP1");
+  const [selectedPeriod, setSelectedPeriod] = useState("current");
 
-  const periods: MarkingPeriod[] = ["MP1", "MP2", "MP3", "MP4"];
+  // Get classes for the selected period
+  const displayClasses = getClassesByQuarter(selectedPeriod);
 
   return (
     <div className="min-h-screen pb-32" style={{ backgroundColor: "var(--color-bg-primary)" }}>
@@ -19,46 +18,54 @@ export function GradesNew() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="px-4 py-5 flex items-center justify-between relative"
-        style={{
-          backgroundColor: "var(--color-bg-primary)",
-          minHeight: "70px"
-        }}
+        className="px-5 pt-6 pb-4"
       >
         <h1
           style={{
             fontFamily: "'Inter', sans-serif",
-            fontWeight: 600,
-            fontSize: "32px",
+            fontWeight: 800,
+            fontSize: "34px",
             color: "var(--color-text-primary)",
+            marginBottom: "4px"
           }}
         >
           Grades
         </h1>
+        <p style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: "16px",
+          color: "var(--color-text-secondary)"
+        }}>
+          View your class performance
+        </p>
       </motion.div>
 
-      {/* Marking Period Tabs */}
-      <div className="px-4 mb-6">
-        <div
-          className="rounded-[16px] p-1 flex gap-1"
-          style={{
-            backgroundColor: "var(--color-bg-elevated)",
-          }}
+      {/* Quarter/Marking Period Selector */}
+      <div className="px-5 mb-5">
+        <div 
+          className="flex gap-2 p-1.5 rounded-[16px]"
+          style={{ backgroundColor: "var(--color-bg-elevated)" }}
         >
-          {periods.map((period) => (
+          {[
+            { id: "current", label: "Current" },
+            { id: "q1", label: "Q1" },
+            { id: "q2", label: "Q2" },
+            { id: "q3", label: "Q3" },
+            { id: "q4", label: "Q4" }
+          ].map((period) => (
             <button
-              key={period}
-              onClick={() => setSelectedPeriod(period)}
-              className="flex-1 py-3 rounded-[12px] font-medium transition-all active:scale-95"
+              key={period.id}
+              onClick={() => setSelectedPeriod(period.id)}
+              className="flex-1 py-2.5 rounded-[12px] transition-all active:scale-95"
               style={{
-                backgroundColor: selectedPeriod === period ? "var(--color-primary)" : "transparent",
-                color: selectedPeriod === period ? "var(--color-text-onAccent)" : "var(--color-text-secondary)",
                 fontFamily: "'Inter', sans-serif",
                 fontSize: "14px",
                 fontWeight: 600,
+                backgroundColor: selectedPeriod === period.id ? "var(--color-primary)" : "transparent",
+                color: selectedPeriod === period.id ? "#FFFFFF" : "var(--color-text-secondary)",
               }}
             >
-              Marking Period {period.replace("MP", "")}
+              {period.label}
             </button>
           ))}
         </div>
@@ -66,7 +73,7 @@ export function GradesNew() {
 
       {/* Classes List */}
       <div className="px-4 space-y-4">
-        {classes.map((cls, index) => (
+        {displayClasses.map((cls, index) => (
           <motion.button
             key={`${selectedPeriod}-${cls.id}`}
             initial={{ opacity: 0, y: 20 }}

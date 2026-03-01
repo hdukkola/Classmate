@@ -6,6 +6,7 @@ import { GPA } from "./screens/GPA";
 import { Analytics } from "./screens/Analytics";
 import { Settings } from "./screens/Settings";
 import { AI } from "./screens/AI";
+import { Calendar } from "./screens/Calendar";
 import { Root } from "./Root";
 
 export const router = createBrowserRouter([
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
       { path: "grades", Component: GradesNew },
       { path: "gpa", Component: GPA },
       { path: "analytics", Component: Analytics },
+      { path: "calendar", Component: Calendar },
       { path: "ai", Component: AI },
       { path: "settings", Component: Settings },
     ],
